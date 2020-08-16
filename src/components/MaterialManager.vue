@@ -1,13 +1,6 @@
 <template>
   <div>
-    <span>材料名:</span>
-    <input v-model="material" type="text" class="w-25">
-    <span>量:</span>
-    <input v-model="value" type="text" class="w-25">
-    <span>単位:</span>
-    <input v-model="unit" type="text" class="w-25 unit">
-    <button class="btn btn-primary" @click="append">追加</button>
-
+    <MaterialRegister @addItem="appendItem($event, item)"></MaterialRegister>
     <table class="table table-striped">
       <thead>
           <tr>
@@ -38,28 +31,30 @@
 </template>
 
 <script>
+import MaterialRegister from "@/components/MaterialRegister";
+
 export default {
   name: "MaterialManager",
 
+  components: {
+    MaterialRegister
+  },
+
   data: function(){
     return {
-      item:{
-        material: '',
-        value: 0,
-        unit: ''
-      }
+      items:[]
     }
   },
 
   methods: {
-    append: function(){
-      this.item.material = this.material;
-      this.item.material = this.value;
-      this.item.material = this.unit;
-      alert(this.item.material + this.item.value + this.item.unit);
+    appendItem: function(item){
+      alert(item.material);
+      alert(item.value);
+      alert(item.unit);
+      this.items.append(item);
+      alert(this.items);
     }
   }
-
 }
 </script>
 
