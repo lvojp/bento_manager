@@ -1,17 +1,29 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld msg="hogehoge maturi"/>
+<!--    <div class="row">-->
+<!--      <PlusMinus menu="testdon" count=""></PlusMinus>-->
+<!--      <PlusMinus menu="testdon"></PlusMinus>-->
+<!--      <PlusMinus menu="testdon"></PlusMinus>-->
+<!--      <PlusMinus menu="testdon"></PlusMinus>-->
+<!--      <PlusMinus menu="testdon"></PlusMinus>-->
+<!--    </div>-->
+    <MaterialManager></MaterialManager>
   </div>
 </template>
-
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+// import PlusMinus from './components/PlusMinus.vue'
+import MaterialManager from './components/MaterialManager'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    // PlusMinus,
+    MaterialManager
   }
 }
 </script>
