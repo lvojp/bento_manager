@@ -1,29 +1,65 @@
 <template>
   <div class="contains">
     <div class="row">
-      <InputSet title="材料名" v-model="item.ingredient"></InputSet>
-      <InputSet title="量" v-model="item.value"></InputSet>
-      <InputSet title="単位" v-model="item.unit"></InputSet>
-      <button class="btn btn-primary" @click="register">追加</button>
+
+      <form class="form-inline">
+        <div class="form-group">
+          <label class="pr-1">
+            材料名
+          </label>
+            <input
+                type="text"
+                id="input-ingredient"
+                v-model="item.ingredient"
+                class="form-control"
+            >
+        </div>
+
+        <div class="form-group">
+          <label class="px-1">
+            量
+          </label>
+          <input
+              type="number"
+              id="input-amount"
+              v-model="item.amount"
+              class="form-control"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="px-1">
+            単位
+          </label>
+          <select v-model="item.unit" id="input-unit" class="form-control">
+            <option v-for="unit in units" :key="unit">{{ unit }}</option>
+          </select>
+        </div>
+
+      </form>
+
+      <button class="btn btn-primary ml-1" @click="register">追加</button>
+      
     </div>
   </div>
 </template>
 
 <script>
-import InputSet from '@/components/Register/InputSet'
+// import InputSet from '@/components/Register/InputSet'
 
 export default {
   components: {
-    InputSet
+    // InputSet
   },
 
   name: "IngredientRegister",
 
   data() {
     return {
+      units: ["個", "グラム"],
       item: {
         ingredient: '',
-        value: '',
+        amount: '',
         unit: ''
       }
     }
@@ -37,7 +73,7 @@ export default {
     },
     clearItem() {
       this.item.ingredient = '';
-      this.item.value = '';
+      this.item.amount = '';
       this.item.unit = '';
     },
   }

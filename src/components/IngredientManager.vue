@@ -17,7 +17,7 @@
         <tr v-for="(item, index) in menu.ingredients" v-bind:key="item.ingredient">
           <td>{{ index }}</td>
           <td>{{ item.ingredient }}</td>
-          <td>{{ item.value }}</td>
+          <td>{{ item.amount }}</td>
           <td>{{ item.unit }}</td>
           <td>
             <button class="btn btn-primary mr-1" @click="editItem(index)">□</button>
@@ -67,13 +67,13 @@ export default {
     },
     // アイテムの編集
     editItem(index){
-      let m = this.menu.ingredients[index].material;
-      let v = this.menu.ingredients[index].value;
+      let m = this.menu.ingredients[index].ingredient;
+      let v = this.menu.ingredients[index].amount;
       let u = this.menu.ingredients[index].unit;
 
       // 各inputのvalueに入力
       document.getElementById('input-ingredient').value = m;
-      document.getElementById('input-value').value = v;
+      document.getElementById('input-amount').value = v;
       document.getElementById('input-unit').value = u;
 
       // this.items[index].material = this.item
