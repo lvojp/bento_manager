@@ -1,26 +1,27 @@
 <template>
   <div>
-    <div class="row mb-5">
-      <form class="form-inline">
+    <div class="row">
+      <form class="col-md-12 form-inline text-center mb-5">
         <div class="form-group">
           <label class="pr-1">
             メニュー
           </label>
           <input type="text" v-model="menu.title" class="form-control">
-          <p>{{menu.title}}</p>
         </div>
       </form>
     </div>
-<!--    <p>{{title}}</p>-->
-    <IngredientRegister @registerItem="appendIngredient" class="mb-5"></IngredientRegister>
-    <table class="table mb-5">
-      <th>No.</th>
-      <th>素材名</th>
-      <th>量</th>
-      <th>単位</th>
-      <th>Edit</th>
 
-      <tbody>
+    <IngredientRegister @registerItem="appendIngredient"></IngredientRegister>
+
+    <div class="row">
+      <table class="table col-md-12">
+        <th>No.</th>
+        <th>素材名</th>
+        <th>量</th>
+        <th>単位</th>
+        <th>Edit</th>
+
+        <tbody>
         <tr v-for="(item, index) in menu.ingredients" v-bind:key="item.ingredient">
           <td>{{ index }}</td>
           <td>{{ item.ingredient }}</td>
@@ -31,10 +32,14 @@
             <button class="btn btn-primary" @click="deleteItem(index)">x</button>
           </td>
         </tr>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
 
-    <button @click="appendMenu" class="btn btn-primary" v-show="menu.ingredients.length > 0">登録完了</button>
+    <div class="row">
+      <button @click="appendMenu" class="btn btn-primary" v-show="menu.ingredients.length > 0">登録完了</button>
+    </div>
+
   </div>
 </template>
 

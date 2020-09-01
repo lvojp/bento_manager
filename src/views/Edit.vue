@@ -1,22 +1,14 @@
 <template>
-<!--  <div id="app" class="container">-->
-<!--    <Header></Header>-->
-<!--    <div class="row">-->
-<!--      <ul>-->
-<!--        <li v-for="menu in menus" :key="menu.title">{{ menu.title }}</li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--    <IngredientManager @registerMenu="appendMenu" :title="select" v-show="true"></IngredientManager>-->
-<!--  </div>-->
-  <div>
-    <router-view></router-view>
+  <div class="container">
+    <Header title="MenuEditor"></Header>
+    <IngredientManager></IngredientManager>
   </div>
 </template>
+
 <script>
 // import PlusMinus from 'i/components/PlusMinus.vue'
-// import IngredientManager from '@/components/IngredientManager'
-// import Header from '@/components/header'
-
+import Header from '@/components/Header'
+import IngredientManager from '@/components/IngredientManager'
 
 export default {
   name: 'App',
@@ -28,8 +20,8 @@ export default {
   },
   components: {
     // PlusMinus,
-    // Header,
-    // IngredientManager
+    Header,
+    IngredientManager
   },
   methods: {
     objectCopy(value) {
