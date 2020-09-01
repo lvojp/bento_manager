@@ -1,10 +1,16 @@
 <template>
   <div>
-    <label class="mb-5">
-      name:
-      <input type="text" v-model="title">
-    </label>
-    <p>{{title}}</p>
+    <div class="row mb-5">
+      <form class="form-inline">
+        <div class="form-group">
+          <label class="pr-1">
+            メニュー
+          </label>
+          <input type="text" v-model="menu.title" class="form-control">
+        </div>
+      </form>
+    </div>
+<!--    <p>{{title}}</p>-->
     <IngredientRegister @registerItem="appendIngredient" class="mb-5"></IngredientRegister>
     <table class="table mb-5">
       <th>No.</th>
@@ -48,6 +54,9 @@ export default {
         ingredients: []
       }
     }
+  },
+  created() {
+    this.menu.title = this.title;
   },
   methods: {
     objectCopy(value) {

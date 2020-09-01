@@ -21,6 +21,7 @@ export default {
   name: 'App',
   data() {
     return {
+      select: 'new',
       menus : []
     }
   },
@@ -31,7 +32,7 @@ export default {
   },
   methods: {
     appendMenu(menu) {
-      console.log(menu.title + menu.ingredients[0]);
+      console.log(menu.title + menu.ingredients);
     }
   }
 }
