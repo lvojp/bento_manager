@@ -1,13 +1,11 @@
 <template>
   <div id="app" class="container">
     <Header></Header>
-<!--    <div class="row">-->
-<!--      <PlusMinus menu="testdon" count=""></PlusMinus>-->
-<!--      <PlusMinus menu="testdon"></PlusMinus>-->
-<!--      <PlusMinus menu="testdon"></PlusMinus>-->
-<!--      <PlusMinus menu="testdon"></PlusMinus>-->
-<!--      <PlusMinus menu="testdon"></PlusMinus>-->
-<!--    </div>-->
+    <div class="row">
+      <ul>
+        <li v-for="menu in menus" :key="menu.title">{{ menu.title }}</li>
+      </ul>
+    </div>
     <IngredientManager @registerMenu="appendMenu" :title="select" v-show="true"></IngredientManager>
   </div>
 </template>
@@ -31,7 +29,14 @@ export default {
     IngredientManager
   },
   methods: {
+    objectCopy(value) {
+      let obj = JSON.stringify(value);
+      obj = JSON.parse(obj);
+      return obj;
+    },
     appendMenu(menu) {
+      let obj = this.objectCopy(menu)
+      this.menus.push(obj);
       console.log(menu.title + menu.ingredients);
     }
   }

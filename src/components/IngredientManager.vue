@@ -7,6 +7,7 @@
             メニュー
           </label>
           <input type="text" v-model="menu.title" class="form-control">
+          <p>{{menu.title}}</p>
         </div>
       </form>
     </div>
@@ -88,7 +89,6 @@ export default {
       // this.items[index].material = this.item
     },
     appendMenu() {
-      this.menu.title = this.title
       this.$emit('registerMenu', this.menu)
     }
   }
