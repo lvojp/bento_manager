@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="container">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="hogehoge maturi"/>
+    <Header></Header>
 <!--    <div class="row">-->
 <!--      <PlusMinus menu="testdon" count=""></PlusMinus>-->
 <!--      <PlusMinus menu="testdon"></PlusMinus>-->
@@ -9,21 +8,31 @@
 <!--      <PlusMinus menu="testdon"></PlusMinus>-->
 <!--      <PlusMinus menu="testdon"></PlusMinus>-->
 <!--    </div>-->
-    <MaterialManager></MaterialManager>
+    <IngredientManager @registerMenu="appendMenu" :title="select" v-show="true"></IngredientManager>
   </div>
 </template>
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-// import PlusMinus from './components/PlusMinus.vue'
-import MaterialManager from './components/MaterialManager'
+// import PlusMinus from 'i/components/PlusMinus.vue'
+import IngredientManager from '@/components/IngredientManager'
+import Header from '@/components/header'
 
 
 export default {
   name: 'App',
+  data() {
+    return {
+      menus : []
+    }
+  },
   components: {
-    HelloWorld,
     // PlusMinus,
-    MaterialManager
+    Header,
+    IngredientManager
+  },
+  methods: {
+    appendMenu(menu) {
+      console.log(menu.title + menu.ingredients[0]);
+    }
   }
 }
 </script>
