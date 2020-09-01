@@ -2,6 +2,13 @@
   <div class="container">
     <div class="row">
       <Header title="Home"></Header>
+      <table class="table">
+        <tr>
+          <td>hoge</td>
+          <td @click="toEdit">□</td>
+        </tr>
+
+      </table>
     </div>
   </div>
 </template>
@@ -23,6 +30,12 @@ export default {
     Header,
   },
   methods: {
+    toEdit() {
+      this.$router.push({
+        name: 'edit',
+        params: { menuName: 'hogehoge' }
+      });
+    },
     objectCopy(value) {
       let obj = JSON.stringify(value);
       obj = JSON.parse(obj);

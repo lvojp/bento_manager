@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header title="MenuEditor"></Header>
-    <IngredientManager></IngredientManager>
+    <IngredientManager :menu-name="menuName"></IngredientManager>
   </div>
 </template>
 
@@ -12,6 +12,9 @@ import IngredientManager from '@/components/IngredientManager'
 
 export default {
   name: 'App',
+  props: {
+    menuName: String
+  },
   data() {
     return {
       select: 'new',

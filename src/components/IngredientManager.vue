@@ -51,8 +51,9 @@ export default {
   components: {
     IngredientRegister
   },
-  props: ["title"],
-
+  props: {
+    menuName: String
+  },
   data() {
     return {
       menu: {
@@ -62,7 +63,7 @@ export default {
     }
   },
   created() {
-    this.menu.title = this.title;
+    this.menu.title = this.menuName;
   },
   methods: {
     objectCopy(value) {

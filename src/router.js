@@ -6,11 +6,16 @@ import Edit from '@/views/Edit';
 Vue.use(Router);
 
 export default new Router({
+   mode: "history",
    routes: [{
       path: '/',
-      component: Home
+      name: 'home',
+      component: Home,
+      props: true
    }, {
       path: '/edit',
-      component: Edit
+      name: 'edit',
+      component: Edit,
+      props: true
    }]
 });
