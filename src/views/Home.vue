@@ -1,13 +1,26 @@
 <template>
   <div class="container">
-    <div class="row">
-      <Header title="Home"></Header>
-      <table class="table">
-        <tr>
-          <td>hoge</td>
-          <td @click="toEdit">□</td>
-        </tr>
+    <Header title="Home"></Header>
 
+    <div class="row">
+      <button @click="toEditNew()" class="btn btn-primary">Create new menu</button>
+    </div>
+
+    <div class="row">
+      <table class="table col-md-12">
+        <th>No.</th>
+        <th>Menu</th>
+        <th>Edit</th>
+        <tbody>
+          <tr v-for="(menu, index) in menus" :key="menu.title">
+            <td>{{ index }}</td>
+            <td>{{ menu }}</td>
+            <td>
+              <button class="btn btn-primary mr-1" @click="toEdit(index)">□</button>
+              <button class="btn btn-primary" @click="deleteItem(index)">x</button>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>
@@ -21,7 +34,6 @@ export default {
   name: 'App',
   data() {
     return {
-      select: 'new',
       menus : []
     }
   },
@@ -30,11 +42,18 @@ export default {
     Header,
   },
   methods: {
-    toEdit() {
+    toEdit(idx) {
       this.$router.push({
         name: 'edit',
-        params: { menuName: 'hogehoge' }
+        params: { argMenu: this.menus[idx] }
       });
+    },
+    toEditNew() {
+      this.$router.push({
+        name: 'edit',
+        params: { argMenu: 'hogehoge' }
+      });
+
     },
     objectCopy(value) {
       let obj = JSON.stringify(value);

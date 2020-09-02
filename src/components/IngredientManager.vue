@@ -37,7 +37,7 @@
     </div>
 
     <div class="row">
-      <button @click="appendMenu" class="btn btn-primary" v-show="menu.ingredients.length > 0">登録完了</button>
+      <button @click="toHome" class="btn btn-primary" v-show="menu.ingredients.length > 0">登録完了</button>
     </div>
 
   </div>
@@ -52,7 +52,7 @@ export default {
     IngredientRegister
   },
   props: {
-    menuName: String
+    argMenu: {}
   },
   data() {
     return {
@@ -61,9 +61,6 @@ export default {
         ingredients: []
       }
     }
-  },
-  created() {
-    this.menu.title = this.menuName;
   },
   methods: {
     objectCopy(value) {
@@ -94,7 +91,11 @@ export default {
 
       // this.items[index].material = this.item
     },
-    appendMenu() {
+    toHome() {
+      this.$router.push({
+        name: 'home',
+        params: {}
+      })
       this.$emit('registerMenu', this.menu)
     }
   }

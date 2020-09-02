@@ -58,14 +58,9 @@ export default {
       item: {
         ingredient: '',
         amount: '',
-        unit: ''
+        unit: '個'
       }
     }
-  },
-  constructor() {
-    this.item.unit = '個'
-
-
   },
 
   methods: {
