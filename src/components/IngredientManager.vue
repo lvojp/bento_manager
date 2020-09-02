@@ -6,7 +6,7 @@
           <label class="pr-1">
             メニュー
           </label>
-          <input type="text" v-model="menu.title" class="form-control">
+          <input type="text" v-model="menuName" class="form-control">
         </div>
       </form>
     </div>
@@ -52,13 +52,22 @@ export default {
     IngredientRegister
   },
   props: {
-    argMenu: {}
+    menuName: String
   },
   data() {
     return {
       menu: {
         title: '',
         ingredients: []
+      }
+    }
+  },
+  mounted() {
+    if (localStorage.getItem(this.menu.title)){
+      try{
+        this.menu = JSON.parse(localStorage.getItem(this.menu.title));
+      } catch(e) {
+        localStorage.removeItem(this.menu.title);
       }
     }
   },
@@ -73,10 +82,12 @@ export default {
       // console.log(value);
       let obj = this.objectCopy(value);
       this.menu.ingredients.push(obj);
+      this.saveMenu()
     },
     // アイテムの削除
     deleteItem(index){
       this.menu.ingredients.splice(index, 1);
+      this.saveMenu()
     },
     // アイテムの編集
     editItem(index){
@@ -97,6 +108,10 @@ export default {
         params: {}
       })
       this.$emit('registerMenu', this.menu)
+    },
+    saveMenu() {
+      const parsed = JSON.stringify(this.menu);
+      localStorage.setItem(this.menu.title, parsed);
     }
   }
 }

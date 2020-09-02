@@ -51,7 +51,7 @@ export default {
     toEditNew() {
       this.$router.push({
         name: 'edit',
-        params: { argMenu: 'hogehoge' }
+        params: { menuName: 'hogehoge' }
       });
 
     },

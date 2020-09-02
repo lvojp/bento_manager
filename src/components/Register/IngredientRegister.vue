@@ -72,7 +72,7 @@ export default {
       this.item.ingredient = '';
       this.item.amount = '';
       this.item.unit = '';
-    },
+    }
   }
 }
 
