@@ -3,7 +3,7 @@
     <Header title="Home"></Header>
 
     <div class="row">
-      <button @click="toEditNew()" class="btn btn-primary">Create new menu</button>
+      <button @click="toEditNew" class="btn btn-primary">Create new menu</button>
     </div>
 
     <div class="row">
@@ -32,6 +32,9 @@ import Header from '@/components/Header'
 
 export default {
   name: 'App',
+  props: {
+    args : Object
+  },
   data() {
     return {
       menus : []
@@ -40,6 +43,9 @@ export default {
   components: {
     // PlusMinus,
     Header,
+  },
+  mounted () {
+    console.log(this.args)
   },
   methods: {
     toEdit(idx) {
@@ -51,7 +57,7 @@ export default {
     toEditNew() {
       this.$router.push({
         name: 'edit',
-        params: { menuName: 'hogehoge' }
+        params: { argMenu: 'hogehoge' }
       });
 
     },
