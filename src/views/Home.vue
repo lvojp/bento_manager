@@ -1,20 +1,24 @@
 <template>
   <div class="container">
-    <Header title="Home"></Header>
+    <div class="row">
+      <Header title="Home"></Header>
+    </div>
 
     <div class="row">
-      <button @click="toEditNew" class="btn btn-primary">Create new menu</button>
+      <button @click="toEdit(-1)" class="btn btn-primary">Create new menu</button>
     </div>
 
     <div class="row">
       <table class="table col-md-12">
         <th>No.</th>
         <th>Menu</th>
+        <th>Count</th>
         <th>Edit</th>
         <tbody>
-          <tr v-for="(menu, index) in menus" :key="menu.title">
+          <tr v-for="(item, index) in menus" :key="item.title">
             <td>{{ index }}</td>
-            <td>{{ menu }}</td>
+            <td>{{ item.title }}</td>
+            <td><PlusMinus></PlusMinus></td>
             <td>
               <button class="btn btn-primary mr-1" @click="toEdit(index)">□</button>
               <button class="btn btn-primary" @click="deleteItem(index)">x</button>
@@ -29,11 +33,14 @@
 
 <script>
 import Header from '@/components/Header'
+import PlusMinus from '@/components/PlusMinus'
+import utilsMixin from '@/mixins/utils.js'
 
 export default {
+  mixins: [utilsMixin],
   name: 'App',
   props: {
-    args : Object
+    homeMenus : Object
   },
   data() {
     return {
@@ -41,47 +48,35 @@ export default {
     }
   },
   components: {
-    // PlusMinus,
+    PlusMinus,
     Header,
   },
-  mounted () {
-    console.log(this.args)
+  beforeMount () {
+    console.log(this.homeMenus)
+    let obj = this.objectCopy(this.homeMenus);
+    this.menus =  obj;
+
   },
   methods: {
     toEdit(idx) {
+      // New Item
       this.$router.push({
         name: 'edit',
-        params: { argMenu: this.menus[idx] }
+        params: {
+          editMenus: this.menus,
+          index: idx
+        }
       });
-    },
-    toEditNew() {
-      this.$router.push({
-        name: 'edit',
-        params: { argMenu: 'hogehoge' }
-      });
-
-    },
-    objectCopy(value) {
-      let obj = JSON.stringify(value);
-      obj = JSON.parse(obj);
-      return obj;
     },
     appendMenu(menu) {
       let obj = this.objectCopy(menu)
       this.menus.push(obj);
-      console.log(menu.title + menu.ingredients);
-    }
+      this.saveToLocalStorage('home', this.menus)
+    },
+    // アイテムの削除
+    deleteItem(idx){
+      this.menus.splice(idx, 1);
+    },
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

@@ -7,7 +7,11 @@
           <label class="pr-1">
             メニュー
           </label>
-          <input type="text" v-model="menu.title" class="form-control">
+          <input
+              type="text"
+              v-model="menu.title"
+              class="form-control"
+          >
         </div>
       </form>
     </div>
@@ -39,7 +43,14 @@
 
     <div class="row">
       <button @click="toHome" class="btn btn-primary" v-show="menu.ingredients.length > 0">登録完了</button>
+      <p>{{ menu }}</p>
+      <p>{{ menus }}</p>
     </div>
+
+    <div class="row">
+      <button @click="toHome" class="btn btn-primary">戻る</button>
+    </div>
+
 
   </div>
 </template>
@@ -47,51 +58,48 @@
 <script>
 import Header from '@/components/Header'
 import IngredientRegister from "@/components/IngredientRegister";
+import utilsMixin from '@/mixins/utils.js'
 
 export default {
+  mixins: [utilsMixin],
   name: "Edit",
   components: {
     Header,
     IngredientRegister
   },
   props: {
-    argMenu: Object
+    editMenus: Object,
+    index: Number
   },
   data() {
     return {
+      menus: [],
       menu: {
         title: '',
         ingredients: []
       }
     }
   },
-  mounted() {
-    if (localStorage.getItem(this.menu.title)){
-      try{
-        this.menu = JSON.parse(localStorage.getItem(this.menu.title));
-      } catch(e) {
-        localStorage.removeItem(this.menu.title);
-      }
+  beforeMount() {
+    // this.menus = this.objectCopy(this.editMenus);
+    this.menus = this.editMenus;
+    if(this.index !== -1){
+      this.menu = this.menus[this.index];
     }
-    this.menu.title = this.menuName
   },
   methods: {
-    objectCopy(value) {
-      let obj = JSON.stringify(value);
-      obj = JSON.parse(obj);
-      return obj
-    },
+
     //アイテムの追加
-    appendIngredient(value) {
-      // console.log(value);
-      let obj = this.objectCopy(value);
-      this.menu.ingredients.push(obj);
-      this.saveMenu()
+    appendIngredient(obj) {
+      this.menu.ingredients.push(this.objectCopy(obj));
+    },
+    appendMenus(obj) {
+      this.menus.push(this.objectCopy(obj));
     },
     // アイテムの削除
     deleteItem(index){
       this.menu.ingredients.splice(index, 1);
-      this.saveMenu()
+      this.saveToLocalStorage(this.menu.title)
     },
     // アイテムの編集
     editItem(index){
@@ -106,16 +114,13 @@ export default {
 
       // this.items[index].material = this.item
     },
+    // ホームに戻る
     toHome() {
+      this.appendMenus(this.menu);
       this.$router.push({
         name: 'home',
-        params: { menuData: this.menu }
+        params: { homeMenus: this.menus}
       })
-      this.$emit('registerMenu', this.menu)
-    },
-    saveMenu() {
-      const parsed = JSON.stringify(this.menu);
-      localStorage.setItem(this.menu.title, parsed);
     }
   }
 }

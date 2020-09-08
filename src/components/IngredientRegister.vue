@@ -54,6 +54,7 @@ export default {
 
   data() {
     return {
+      count: Number,
       units: ["個", "グラム"],
       item: {
         ingredient: '',
@@ -73,7 +74,7 @@ export default {
       this.item.amount = '';
       this.item.unit = '';
     }
-  }
+  },
 }
 
 </script>

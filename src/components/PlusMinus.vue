@@ -2,7 +2,7 @@
   <div>
     <span>{{ menu }}</span>
     <button class="btn btn-primary" @click="countDown">-</button>
-    <input type="text" :value="count" class="w-25">
+    <input type="text" :value="count" class="mx-1 w-25">
     <button class="btn btn-primary" @click="countUp">+</button>
   </div>
 </template>
@@ -25,7 +25,9 @@ export default {
     },
 
     countDown: function(){
-      this.count--;
+      if(this.count > 0){
+        this.count--;
+      }
       // alert(this.count);
     }
   }
