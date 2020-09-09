@@ -5,7 +5,7 @@
     </div>
 
     <div class="row">
-      <button @click="toEdit(-1)" class="btn btn-primary">Create new menu</button>
+      <div @click="toEdit(-1)" class="btn btn-primary">Create new menu</div>
     </div>
 
     <div class="row">
@@ -20,8 +20,8 @@
             <td>{{ item.title }}</td>
             <td><PlusMinus></PlusMinus></td>
             <td>
-              <button class="btn btn-primary mr-1" @click="toEdit(index)">□</button>
-              <button class="btn btn-primary" @click="deleteItem(index)">x</button>
+              <div class="btn btn-primary mr-1" @click="toEdit(index)">□</div>
+              <div class="btn btn-primary" @click="deleteItem(index)">x</div>
             </td>
           </tr>
         </tbody>

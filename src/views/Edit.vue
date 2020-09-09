@@ -33,8 +33,8 @@
           <td>{{ item.amount }}</td>
           <td>{{ item.unit }}</td>
           <td>
-            <button class="btn btn-primary mr-1" @click="editItem(index)">□</button>
-            <button class="btn btn-primary" @click="deleteItem(index)">x</button>
+            <div class="btn btn-primary mr-1" @click="editItem(index)">□</div>
+            <div class="btn btn-primary" @click="deleteItem(index)">x</div>
           </td>
         </tr>
         </tbody>
@@ -114,9 +114,15 @@ export default {
 
       // this.items[index].material = this.item
     },
+
     // ホームに戻る
     toHome() {
-      this.appendMenus(this.menu);
+      if( this.menus !== undefined) {
+        alert(this.checkKeyExist(this.menu.title, this.menus))
+      }else{
+        this.appendMenus(this.menu);
+      }
+
       this.$router.push({
         name: 'home',
         params: { homeMenus: this.menus}

@@ -21,6 +21,15 @@ export default {
           localStorage.removeItem(key);
         }
       }
+    },
+    checkKeyExist(key, array){
+      for(let i = 0; i < array.length; i++){
+        if(key === array[i].title){
+          return true;
+        }else{
+          return false;
+        }
+      }
     }
   }
 }

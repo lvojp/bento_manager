@@ -36,7 +36,7 @@
           </select>
         </div>
 
-        <button class="btn btn-primary ml-1" @click="register">追加</button>
+        <div class="btn btn-primary ml-1" @click="register">追加</div>
       </form>
     </div>
   </div>
