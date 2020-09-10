@@ -1,8 +1,8 @@
 <template>
   <div>
-    <span>{{ menu }}</span>
+    <span>{{ menuCount.menu }}</span>
     <button class="btn btn-primary" @click="countDown">-</button>
-    <input type="text" :value="count" class="mx-1 w-25">
+    <input type="text" :value="menuCount.requiredNumber" class="mx-1 w-25">
     <button class="btn btn-primary" @click="countUp">+</button>
   </div>
 </template>
@@ -14,21 +14,28 @@ export default {
 
   data: function(){
     return {
-      count: 0
+      menuCount: {
+        name : this.menu,
+        requiredNumber : 0
+      }
     }
   },
 
   methods: {
-    countUp: function(){
-      this.count++;
+    countUp() {
+      this.menuCount.requiredNumber++;
       // alert(this.count);
     },
 
-    countDown: function(){
-      if(this.count > 0){
-        this.count--;
+    countDown() {
+      if(this.menuCount.requiredNumber > 0){
+        this.menuCount.requiredNumber--;
       }
       // alert(this.count);
+    },
+    emitter() {
+      this.$emit('changeCount')
+
     }
   }
 }

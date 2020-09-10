@@ -21,12 +21,12 @@ export default {
           localStorage.removeItem(key);
         }
       }else{
-        return 1;
+        return -1;
       }
     },
 
-    // Menusのコントローラー
-    getMenuIdxByTitle(menus, title){
+    // OriginalMenusのコントローラー
+    getOrgMenuIdxByTitle(menus, title){
       if(menus.length > 0){
         for(let i = 0; i < menus.length; i++){
           if(title === menus[i].title){
@@ -38,9 +38,9 @@ export default {
       return -1;
     },
 
-    checkDuplicateByTitle(menus, title){
+    checkDuplicateInOrgMenuByTitle(menus, title){
       let idx = 0;
-      idx = this.getMenuIdxByTitle(menus,title);
+      idx = this.getOrgMenuIdxByTitle(menus,title);
       if(idx !== -1){
         return true;
       }else{
@@ -48,9 +48,9 @@ export default {
       }
     },
 
-    deleteMenuByTitle(menus, title){
+    deleteOrgMenuByTitle(menus, title){
       let idx = 0;
-      idx = this.getMenuIdxByTitle(menus,title);
+      idx = this.getOrgMenuIdxByTitle(menus,title);
       if(idx !== -1){
         menus.splice(idx, 1);
         return true;
@@ -59,14 +59,15 @@ export default {
       }
     },
 
-    updateMenus(menus, title, menu){
+    // updateMenus(menus, menu){
+    updateOrgMenu(menus, menu){
       let idx = 0;
-      idx = this.getMenuIdxByTitle(menus,title);
+      idx = this.getOrgMenuIdxByTitle(menus,menu.title);
       if(idx !== -1){
-        menus.splice(idx, 0, menu);
-        return true;
+        menus.splice(idx, 1, menu);
+        return menus;
       }else{
-        return false;
+        return {};
       }
     }
   }

@@ -88,7 +88,7 @@ export default {
   },
   watch: {
     'myMenu.title': function() {
-      this.isUpdate = this.checkDuplicateByTitle(this.editMenus, this.myMenu.title);
+      this.isUpdate = this.checkDuplicateInOrgMenuByTitle(this.editMenus, this.myMenu.title);
     }
 
   },
@@ -125,7 +125,9 @@ export default {
     },
     loadMenu() {
       if(this.editMenus.length > 0){
+        // メニュー表をコピー
         this.myMenus = this.objectCopy(this.editMenus);
+        // メニューの編集作業時にはメニューのロード
         if (this.index > -1){
           this.myMenu = this.myMenus[this.index];
         }
@@ -133,9 +135,10 @@ export default {
     },
     // ホームに戻る
     toHome() {
-      if(this.checkDuplicateByTitle(this.editMenus, this.myMenu.title)){
-        alert('このメニューは既に存在しています。メニュー名を変更してください');
-        return 0;
+      if(this.isUpdate){
+        // this.updateMenus(this.editMenus, this.myMenu);
+        this.updateOrgMenu(this.editMenus, this.myMenu);
+        console.log(this.editMenus);
       }else{
         this.appendMenus(this.myMenu);
       }

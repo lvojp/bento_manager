@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-// import PlusMinus from 'i/components/PlusMinus.vue'
+// import PlusMinus from 'i/components/Counter.vue'
 // import IngredientManager from '@/components/IngredientManager'
 // import Header from '@/components/header'
 
