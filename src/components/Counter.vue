@@ -1,40 +1,36 @@
 <template>
   <div>
-    <span>{{ menuCount.menu }}</span>
     <button class="btn btn-primary" @click="countDown">-</button>
-    <input type="text" :value="menuCount.requiredNumber" class="mx-1 w-25">
+    <input type="text" :value="value" class="mx-1 w-25">
     <button class="btn btn-primary" @click="countUp">+</button>
+    <p>{{ value }}</p>
   </div>
 </template>
 
 <script>
 export default {
   name: "PlusMinus",
-  props: ["menu"],
 
   data: function(){
     return {
-      menuCount: {
-        name : this.menu,
-        requiredNumber : 0
-      }
+      value: 0
     }
   },
 
   methods: {
     countUp() {
-      this.menuCount.requiredNumber++;
-      // alert(this.count);
+      this.value++;
+      this.emitter(this.value);
     },
 
     countDown() {
-      if(this.menuCount.requiredNumber > 0){
-        this.menuCount.requiredNumber--;
+      if(this.value > 0){
+        this.value--;
       }
-      // alert(this.count);
+      this.emitter();
     },
     emitter() {
-      this.$emit('changeCount')
+      this.$emit('changeCount', this.value)
 
     }
   }

@@ -17,9 +17,9 @@
         <th>Edit</th>
         <tbody>
           <tr v-for="(item, index) in myMenus" :key="item.title">
-            <td>{{ index + 1 }}</td>
+            <td>{{ index }}</td>
             <td>{{ item.title }}</td>
-            <td><PlusMinus @changeCount="caliculate"></PlusMinus></td>
+            <td><Counter @changeCount="caliculate($event, index)"></Counter></td>
             <td>
               <div class="btn btn-primary mr-1" @click="toEdit(index)">□</div>
               <div class="btn btn-primary" @click="deleteItem(index)">x</div>
@@ -37,7 +37,7 @@
         <th>Count</th>
         <tbody>
         <tr v-for="(item, index) in myMenus" :key="item.title">
-          <td>{{ index + 1 }}</td>
+          <td>{{ index }}</td>
           <td>{{ item.title }}</td>
           <td>{{item.count}}</td>
         </tr>
@@ -51,7 +51,7 @@
 
 <script>
 import Header from '@/components/Header'
-import PlusMinus from '@/components/Counter'
+import Counter from '@/components/Counter'
 import utilsMixin from '@/mixins/utils.js'
 
 export default {
@@ -66,7 +66,7 @@ export default {
     }
   },
   components: {
-    PlusMinus,
+    Counter,
     Header,
   },
   beforeMount () {
@@ -105,8 +105,12 @@ export default {
         }
       }
     },
-    caliculate(info){
-
+    caliculate(eventArgs, index){
+      console.log(eventArgs, index);
+    }
+  },
+  computed: {
+    requiredItems: function() {
 
     }
   }
