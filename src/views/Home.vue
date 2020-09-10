@@ -1,3 +1,4 @@
+<script src="../mixins/utils.js"></script>
 <template>
   <div class="container">
     <div class="row">
@@ -15,7 +16,7 @@
         <th>Count</th>
         <th>Edit</th>
         <tbody>
-          <tr v-for="(item, index) in menus" :key="item.title">
+          <tr v-for="(item, index) in myMenus" :key="item.title">
             <td>{{ index }}</td>
             <td>{{ item.title }}</td>
             <td><PlusMinus></PlusMinus></td>
@@ -40,11 +41,11 @@ export default {
   mixins: [utilsMixin],
   name: 'App',
   props: {
-    homeMenus : Object
+    homeMenus : Array
   },
   data() {
     return {
-      menus : []
+      myMenus : []
     }
   },
   components: {
@@ -52,10 +53,7 @@ export default {
     Header,
   },
   beforeMount () {
-    console.log(this.homeMenus)
-    let obj = this.objectCopy(this.homeMenus);
-    this.menus =  obj;
-
+    this.loadMenus();
   },
   methods: {
     toEdit(idx) {
@@ -63,20 +61,37 @@ export default {
       this.$router.push({
         name: 'edit',
         params: {
-          editMenus: this.menus,
+          editMenus: this.myMenus,
           index: idx
         }
       });
     },
-    appendMenu(menu) {
-      let obj = this.objectCopy(menu)
-      this.menus.push(obj);
-      this.saveToLocalStorage('home', this.menus)
-    },
     // アイテムの削除
-    deleteItem(idx){
-      this.menus.splice(idx, 1);
+    deleteItem(idx) {
+      this.myMenus.splice(idx, 1);
     },
+    loadMenus() {
+      if(this.homeMenus !== undefined){
+        this.myMenus = this.objectCopy(this.homeMenus);
+        this.saveToLocalStorage(this.myMenus, 'home')
+        console.log('Save status.')
+      }else{
+        let obj = this.loadFromLocalStorage('home')
+        if(obj !== -1){
+          this.myMenus = obj;
+          console.log('Load status.')
+        }
+      }
+
+      //
+      // if(this.homeMenus === undefined || this.homeMenus.length < 1){
+      //   // メニューの登録がひとつもないとき
+      //   this.myMenus = this.loadFromLocalStorage('home')
+      // }else{
+      //   // メニューの登録が既に存在するとき
+      //   this.myMenus = this.objectCopy(this.homeMenus);
+      // }
+    }
   }
 }
 </script>

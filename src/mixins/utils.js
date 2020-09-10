@@ -20,15 +20,53 @@ export default {
         } catch (e) {
           localStorage.removeItem(key);
         }
+      }else{
+        return 1;
       }
     },
-    checkKeyExist(key, array){
-      for(let i = 0; i < array.length; i++){
-        if(key === array[i].title){
-          return true;
-        }else{
-          return false;
+
+    // Menusのコントローラー
+    getMenuIdxByTitle(menus, title){
+      if(menus.length > 0){
+        for(let i = 0; i < menus.length; i++){
+          if(title === menus[i].title){
+            return i;
+          }
         }
+      }
+      // menusに指定のタイトルが存在しなければfalseを返す
+      return -1;
+    },
+
+    checkDuplicateByTitle(menus, title){
+      let idx = 0;
+      idx = this.getMenuIdxByTitle(menus,title);
+      if(idx !== -1){
+        return true;
+      }else{
+        return false;
+      }
+    },
+
+    deleteMenuByTitle(menus, title){
+      let idx = 0;
+      idx = this.getMenuIdxByTitle(menus,title);
+      if(idx !== -1){
+        menus.splice(idx, 1);
+        return true;
+      }else{
+        return false;
+      }
+    },
+
+    updateMenus(menus, title, menu){
+      let idx = 0;
+      idx = this.getMenuIdxByTitle(menus,title);
+      if(idx !== -1){
+        menus.splice(idx, 0, menu);
+        return true;
+      }else{
+        return false;
       }
     }
   }

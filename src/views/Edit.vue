@@ -9,7 +9,8 @@
           </label>
           <input
               type="text"
-              v-model="menu.title"
+              v-model="myMenu.title"
+              placeholder="New Menu"
               class="form-control"
           >
         </div>
@@ -27,7 +28,7 @@
         <th>Edit</th>
 
         <tbody>
-        <tr v-for="(item, index) in menu.ingredients" v-bind:key="item.ingredient">
+        <tr v-for="(item, index) in myMenu.ingredients" v-bind:key="item.ingredient">
           <td>{{ index }}</td>
           <td>{{ item.ingredient }}</td>
           <td>{{ item.amount }}</td>
@@ -42,15 +43,14 @@
     </div>
 
     <div class="row">
-      <button @click="toHome" class="btn btn-primary" v-show="menu.ingredients.length > 0">登録完了</button>
-      <p>{{ menu }}</p>
-      <p>{{ menus }}</p>
+      <button @click="toHome" class="btn btn-primary" v-show="myMenu.ingredients.length > 0">登録完了</button>
+      <p>{{ myMenu }}</p>
+      <p>{{ myMenus }}</p>
     </div>
 
     <div class="row">
-      <button @click="toHome" class="btn btn-primary">戻る</button>
+      <button @click="toHomeWithoutSave" class="btn btn-primary">戻る</button>
     </div>
-
 
   </div>
 </template>
@@ -68,44 +68,44 @@ export default {
     IngredientRegister
   },
   props: {
-    editMenus: Object,
+    editMenus: Array,
     index: Number
   },
   data() {
     return {
-      menus: [],
-      menu: {
+      myMenus: [],
+      myMenu: {
         title: '',
         ingredients: []
       }
     }
   },
   beforeMount() {
-    // this.menus = this.objectCopy(this.editMenus);
-    this.menus = this.editMenus;
-    if(this.index !== -1){
-      this.menu = this.menus[this.index];
-    }
+    this.loadMenu()
   },
   methods: {
-
     //アイテムの追加
     appendIngredient(obj) {
-      this.menu.ingredients.push(this.objectCopy(obj));
+      if(this.myMenu.title === ''){
+        alert('メニューの名前を入力してください');
+        return 0;
+      }
+      this.myMenu.ingredients.push(this.objectCopy(obj));
+      this.saveToLocalStorage(this.myMenu, this.myMenu.title)
     },
     appendMenus(obj) {
-      this.menus.push(this.objectCopy(obj));
+      this.editMenus.push(this.objectCopy(obj));
     },
     // アイテムの削除
     deleteItem(index){
-      this.menu.ingredients.splice(index, 1);
-      this.saveToLocalStorage(this.menu.title)
+      this.myMenu.ingredients.splice(index, 1);
+      this.saveToLocalStorage(this.myMenu.title)
     },
     // アイテムの編集
     editItem(index){
-      let m = this.menu.ingredients[index].ingredient;
-      let v = this.menu.ingredients[index].amount;
-      let u = this.menu.ingredients[index].unit;
+      let m = this.myMenu.ingredients[index].ingredient;
+      let v = this.myMenu.ingredients[index].amount;
+      let u = this.myMenu.ingredients[index].unit;
 
       // 各inputのvalueに入力
       document.getElementById('input-ingredient').value = m;
@@ -114,20 +114,35 @@ export default {
 
       // this.items[index].material = this.item
     },
-
+    loadMenu() {
+      if(this.editMenus.length > 0){
+        this.myMenus = this.objectCopy(this.editMenus);
+        if (this.index > -1){
+          this.myMenu = this.myMenus[this.index];
+        }
+      }
+    },
     // ホームに戻る
     toHome() {
-      if( this.menus !== undefined) {
-        alert(this.checkKeyExist(this.menu.title, this.menus))
+      if(this.checkDuplicateByTitle(this.editMenus, this.myMenu.title)){
+        // alert('このメニューは既に存在しています。メニュー名を変更してください');
+        // return 0;
       }else{
-        this.appendMenus(this.menu);
+        this.appendMenus(this.myMenu);
       }
 
       this.$router.push({
         name: 'home',
-        params: { homeMenus: this.menus}
+        params: { homeMenus: this.editMenus}
+      })
+    },
+    toHomeWithoutSave() {
+      this.$router.push({
+        name: 'home',
+        params: { homeMenus: this.myMenus}
       })
     }
+
   }
 }
 
