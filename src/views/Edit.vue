@@ -42,15 +42,17 @@
       </table>
     </div>
 
-    <div class="row">
-      <button @click="toHome" class="btn btn-primary" v-show="myMenu.ingredients.length > 0">登録完了</button>
-      <p>{{ myMenu }}</p>
-      <p>{{ myMenus }}</p>
+    <div class="row mt-5">
+      <div class="col-md-4 text-right" v-show="myMenu.ingredients.length > 0">
+        <template v-if="isUpdate === true">
+          <div @click="toHome" class="btn btn-primary mr-2">更新</div>
+        </template>
+        <template v-if="isUpdate === false">
+          <div @click="toHome" class="btn btn-primary">新規登録</div>
+        </template>
+      </div>
     </div>
-
-    <div class="row">
-      <button @click="toHomeWithoutSave" class="btn btn-primary">戻る</button>
-    </div>
+    <p>{{isUpdate}}</p>
 
   </div>
 </template>
@@ -73,6 +75,7 @@ export default {
   },
   data() {
     return {
+      isUpdate: false,
       myMenus: [],
       myMenu: {
         title: '',
@@ -82,6 +85,12 @@ export default {
   },
   beforeMount() {
     this.loadMenu()
+  },
+  watch: {
+    'myMenu.title': function() {
+      this.isUpdate = this.checkDuplicateByTitle(this.editMenus, this.myMenu.title);
+    }
+
   },
   methods: {
     //アイテムの追加
@@ -125,8 +134,8 @@ export default {
     // ホームに戻る
     toHome() {
       if(this.checkDuplicateByTitle(this.editMenus, this.myMenu.title)){
-        // alert('このメニューは既に存在しています。メニュー名を変更してください');
-        // return 0;
+        alert('このメニューは既に存在しています。メニュー名を変更してください');
+        return 0;
       }else{
         this.appendMenus(this.myMenu);
       }
