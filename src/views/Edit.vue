@@ -19,7 +19,7 @@
 
     <IngredientRegister @registerItem="appendIngredient"></IngredientRegister>
 
-    <div class="row">
+    <div class="row mb-5">
       <table class="table col-md-12">
         <th>No.</th>
         <th>素材名</th>
@@ -42,17 +42,17 @@
       </table>
     </div>
 
-    <div class="row mt-5">
-      <div class="col-md-4 text-right" v-show="myMenu.ingredients.length > 0">
+    <div class="row">
+      <div class="col-md-12 text-left" v-show="myMenu.ingredients.length > 0">
         <template v-if="isUpdate === true">
-          <div @click="toHome" class="btn btn-primary mr-2">更新</div>
+          <div @click="toHome" class="btn btn-primary col-md-5">更新</div>
         </template>
         <template v-if="isUpdate === false">
-          <div @click="toHome" class="btn btn-primary">新規登録</div>
+          <div @click="toHome" class="btn btn-primary col-md-5">新規登録</div>
         </template>
       </div>
     </div>
-    <p>{{isUpdate}}</p>
+<!--    <p>{{isUpdate}}</p>-->
 
   </div>
 </template>

@@ -3,7 +3,7 @@
     <button class="btn btn-primary" @click="countDown">-</button>
     <input type="text" :value="value" class="mx-1 w-25">
     <button class="btn btn-primary" @click="countUp">+</button>
-    <p>{{ value }}</p>
+<!--    <p>{{ value }}</p>-->
   </div>
 </template>
 
