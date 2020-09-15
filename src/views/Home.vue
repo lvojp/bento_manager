@@ -6,14 +6,14 @@
     </div>
 
     <div class="row">
-      <div @click="toEdit(-1)" class="btn btn-primary">Create new menu</div>
+      <div @click="toEdit(-1)" class="btn btn-primary">新しいメニューの作成</div>
     </div>
 
     <div class="row mb-5">
       <table class="table col-md-12 table-striped">
         <th>No.</th>
-        <th>Menu</th>
-        <th>Required Count</th>
+        <th>メニュー</th>
+        <th>必要個数</th>
         <th>Edit</th>
         <tbody>
           <tr v-for="(item, index) in myMenus" :key="item.title">
@@ -30,12 +30,12 @@
     </div>
 
     <div class="row">
-      <h3>Required Ingredient</h3>
+      <h3>必要材料</h3>
       <table class="table col-md-12 table-striped">
         <th>No.</th>
-        <th>Ingredient</th>
-        <th>Amount</th>
-        <th>Unit</th>
+        <th>材料名</th>
+        <th>必要個数</th>
+        <th>単位</th>
         <tbody>
         <tr v-for="(item, index) in result" :key="item.ingredient">
           <td>{{ index }}</td>
