@@ -20,7 +20,7 @@
     <IngredientRegister @registerItem="appendIngredient"></IngredientRegister>
 
     <div class="row mb-5">
-      <table class="table col-md-12">
+      <table class="table table-striped col-md-12">
         <th>No.</th>
         <th>素材名</th>
         <th>量</th>
@@ -34,8 +34,8 @@
           <td>{{ item.amount }}</td>
           <td>{{ item.unit }}</td>
           <td>
-            <div class="btn btn-primary mr-1" @click="editItem(index)">□</div>
-            <div class="btn btn-primary" @click="deleteItem(index)">x</div>
+            <button type="button" class="btn btn-success mr-1" @click="editItem(index)">□</button>
+            <button type="button" class="btn btn-success" @click="deleteItem(index)">x</button>
           </td>
         </tr>
         </tbody>
@@ -45,10 +45,10 @@
     <div class="row">
       <div class="col-md-12 text-left" v-show="myMenu.ingredients.length > 0">
         <template v-if="isUpdate === true">
-          <div @click="toHome" class="btn btn-primary col-md-5">更新</div>
+          <button type="button" @click="toHome" class="btn btn-success col-md-5">更新</button>
         </template>
         <template v-if="isUpdate === false">
-          <div @click="toHome" class="btn btn-primary col-md-5">新規登録</div>
+          <button type="button" @click="toHome" class="btn btn-success col-md-5">新規登録</button>
         </template>
       </div>
     </div>

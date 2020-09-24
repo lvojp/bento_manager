@@ -69,6 +69,27 @@ export default {
       }else{
         return {};
       }
+    },
+    // 降順ソート
+    ascSortList(arr){
+      arr.sort(function (a, b) {
+        if (a > b) return -1;
+        if (a < b) return 1;
+      });
+      return arr;
+    },
+    // 整数チェック
+    isInteger(x){
+      try {
+        let n = parseFloat(x)
+        if (Math.round(n) === n) {
+          return true;
+        }else{
+          return false;
+        }
+      }catch (e) {
+        return false;
+      }
     }
   }
 }
