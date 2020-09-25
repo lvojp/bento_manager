@@ -6,18 +6,23 @@
     </div>
 
     <div class="row">
-      <button type="button" @click="toEdit(-1)" class="btn btn-success">新しいメニューの作成</button>
+      <div class="col-md-6">
+        <button type="button" @click="toEdit(-1)" class="btn btn-success mr-5">新しいメニューの作成</button>
+      </div>
+      <div class="col-md-6">
+        <button type="button" @click="toIo" class="btn btn-success mr-3">メニューの保存と呼び出し</button>
+      </div>
     </div>
 
     <div class="row mb-5">
       <table class="table col-md-12 table-striped">
-        <th>No.</th>
+<!--        <th>No.</th>-->
         <th>メニュー</th>
         <th>必要個数</th>
         <th>Edit</th>
         <tbody>
         <tr v-for="(item, index) in myMenus" :key="item.title">
-          <td>{{ index }}</td>
+<!--          <td>{{ index }}</td>-->
           <td>{{ item.title }}</td>
           <td>
             <Counter @changeCount="caliculate($event, index)"></Counter>
@@ -34,13 +39,14 @@
     <div class="row">
       <h3>Required Ingrement</h3>
       <table class="table col-md-12 table-striped">
-        <th>No.</th>
+<!--        <th>No.</th>-->
         <th>材料名</th>
         <th>必要個数</th>
         <th>単位</th>
         <tbody>
-        <tr v-for="(item, index) in result" :key="item.ingredient">
-          <td>{{ index }}</td>
+<!--        <tr v-for="(item, index) in result" :key="item.ingredient">-->
+        <tr v-for="(item) in result" :key="item.ingredient">
+<!--          <td>{{ index }}</td>-->
           <td>{{ item.ingredient }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.unit }}</td>
@@ -98,7 +104,18 @@ export default {
       });
     },
 
+    toIo() {
+      // New Item
+      this.$router.push({
+        name: 'io',
+        params: {
+          ioMenus: this.myMenus,
+        }
+      });
+    },
+
     deleteItem(idx) {
+      this.objectAdder(this.myMenus, idx, 0)
       this.myMenus.splice(idx, 1);
       // this.homeMenus = this.objectCopy(this.myMenus);
       this.saveToLocalStorage(this.myMenus, 'home')
@@ -122,6 +139,10 @@ export default {
       }
     },
 
+    saveMenusFromJson() {
+      alert(JSON.stringify(this.myMenus))
+    },
+
     caliculate(eventArgs, index) {
       this.objectAdder(this.myMenus, index, eventArgs)
     },
@@ -129,13 +150,14 @@ export default {
     objectAdder(arr, idx, count) {
       //メニューの具材の個数をそれぞれカウントごとに倍加して単配列にする
       let result = this.serializeIngredients(arr[idx], count)
+      //メニューの具材の個数をそれぞれカウントごとに倍加して単配列にする
       this.needAmount.splice(idx, 1, result);
       this.needAmount = this.removeZeroAmountIngredients(this.needAmount);
-      this.makeResult();
+      this.displayResult();
     },
 
     //メニューの具材の個数をそれぞれカウントごとに倍加してオブジェクトの単配列にする
-    serializeIngredients(arr, count){
+    serializeIngredients(arr, count) {
       let result = [];
       let targetMenu = arr.ingredients;
       for (let i = 0; i < targetMenu.length; i++) {
@@ -148,7 +170,26 @@ export default {
       return result
     },
 
-    makeResult() {
+    // 必要量が0になった材料を結果表示用リストから削除
+    removeZeroAmountIngredients(arr) {
+      let list = [];
+      let result = this.objectCopy(arr);
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].amount === 0) {
+          list.push(i);
+        }
+      }
+      // 降順ソート （配列の後ろの方から消していかないと順番が崩れるから
+      list = this.ascSortList(list)
+
+      // リストをもとに配列を削除
+      for (let i = 0; i < list.length; i++) {
+        result.splice(list[i], 1);
+      }
+      return result;
+    },
+
+    displayResult() {
       // 重複チェックの後に最終結果を格納
       let result = [];
       for (let i = 0; i < this.needAmount.length; i++) {
@@ -159,12 +200,14 @@ export default {
       let buf = this.removeSameIngredient(result);
       this.result = this.removeZeroAmountIngredients(buf);
     },
+
     removeSameIngredient(arr) {
-      let list = this.makeUniqueIngredientsList(arr);
-      let result = this.ingredientsCounter(list, arr);
+      let list = this.extractUniqueMenuNames(arr);
+      let result = this.countIngredientsAmount(list, arr);
       return result;
     },
-    ingredientsCounter(list, arr) {
+
+    countIngredientsAmount(list, arr) {
       let result = [];
       list.forEach(function (item) {
         let buf = {};
@@ -183,35 +226,16 @@ export default {
       });
       return result;
     },
-    
+
     // リストから重複したものを削除
-    makeUniqueIngredientsList(arr) {
+    extractUniqueMenuNames(arr) {
       let buf = [];
       for (let i = 0; i < arr.length; i++) {
         buf.push(arr[i].ingredient);
       }
-
       let result = buf.filter(function (x, i, self) {
         return self.indexOf(x) === i;
       });
-      return result;
-    },
-
-    // 必要量が0になった材料を結果表示用リストから削除
-    removeZeroAmountIngredients(arr) {
-      let list = [];
-      let result = this.objectCopy(arr);
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].amount === 0) {
-          list.push(i);
-        }
-      }
-      // 降順ソート （配列の後ろの方から消していかないと順番が崩れるから
-      list = this.ascSortList(list)
-
-      for (let i = 0; i < list.length; i++) {
-        result.splice(list[i], 1);
-      }
       return result;
     }
   },

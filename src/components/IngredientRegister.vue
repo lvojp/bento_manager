@@ -7,12 +7,12 @@
           <label class="pr-1">
             材料名
           </label>
-            <input
-                type="text"
-                id="input-ingredient"
-                v-model="item.ingredient"
-                class="form-control"
-            >
+          <input
+              type="text"
+              id="input-ingredient"
+              v-model="item.ingredient"
+              class="form-control"
+          >
         </div>
 
         <div class="form-group">
@@ -36,7 +36,7 @@
           </select>
         </div>
 
-        <button type="button" class="btn btn-success ml-1" @click="register" >追加</button>
+        <button type="button" class="btn btn-success ml-1" @click="register">追加</button>
       </form>
     </div>
   </div>

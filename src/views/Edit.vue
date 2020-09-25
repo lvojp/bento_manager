@@ -52,7 +52,7 @@
         </template>
       </div>
     </div>
-<!--    <p>{{isUpdate}}</p>-->
+    <!--    <p>{{isUpdate}}</p>-->
 
   </div>
 </template>
@@ -79,6 +79,7 @@ export default {
       myMenus: [],
       myMenu: {
         title: '',
+        amount: 0,
         ingredients: []
       }
     }
@@ -87,7 +88,7 @@ export default {
     this.loadMenu()
   },
   watch: {
-    'myMenu.title': function() {
+    'myMenu.title': function () {
       this.isUpdate = this.checkDuplicateInOrgMenuByTitle(this.editMenus, this.myMenu.title);
     }
 
@@ -95,7 +96,7 @@ export default {
   methods: {
     //アイテムの追加
     appendIngredient(obj) {
-      if(this.myMenu.title === ''){
+      if (this.myMenu.title === '') {
         alert('メニューの名前を入力してください');
         return 0;
       }
@@ -106,12 +107,12 @@ export default {
       this.editMenus.push(this.objectCopy(obj));
     },
     // アイテムの削除
-    deleteItem(index){
+    deleteItem(index) {
       this.myMenu.ingredients.splice(index, 1);
       this.saveToLocalStorage(this.myMenu.title)
     },
     // アイテムの編集
-    editItem(index){
+    editItem(index) {
       let m = this.myMenu.ingredients[index].ingredient;
       let v = this.myMenu.ingredients[index].amount;
       let u = this.myMenu.ingredients[index].unit;
@@ -124,34 +125,34 @@ export default {
       // this.items[index].material = this.item
     },
     loadMenu() {
-      if(this.editMenus.length > 0){
+      if (this.editMenus.length > 0) {
         // メニュー表をコピー
         this.myMenus = this.objectCopy(this.editMenus);
         // メニューの編集作業時にはメニューのロード
-        if (this.index > -1){
+        if (this.index > -1) {
           this.myMenu = this.myMenus[this.index];
         }
       }
     },
     // ホームに戻る
     toHome() {
-      if(this.isUpdate){
+      if (this.isUpdate) {
         // this.updateMenus(this.editMenus, this.myMenu);
         this.updateOrgMenu(this.editMenus, this.myMenu);
         console.log(this.editMenus);
-      }else{
+      } else {
         this.appendMenus(this.myMenu);
       }
 
       this.$router.push({
         name: 'home',
-        params: { homeMenus: this.editMenus}
+        params: {homeMenus: this.editMenus}
       })
     },
     toHomeWithoutSave() {
       this.$router.push({
         name: 'home',
-        params: { homeMenus: this.myMenus}
+        params: {homeMenus: this.myMenus}
       })
     }
 
