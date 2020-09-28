@@ -9,8 +9,8 @@
           </label>
           <input
               type="text"
-              id="input-ingredient"
-              v-model="item.ingredient"
+              id="input-name"
+              v-model="item.name"
               class="form-control"
           >
         </div>
@@ -52,25 +52,35 @@ export default {
 
   name: "IngredientRegister",
 
+  props: ['propItem'],
+
   data() {
     return {
       count: Number,
       units: ["個", "グラム"],
       item: {
-        ingredient: '',
+        name: '',
         amount: '',
         unit: '個'
       }
     }
   },
 
+  beforeMount() {
+    this.importItem(this.propItem);
+  },
+
   methods: {
+    importItem(o) {
+      this.item = o;
+    },
+
     register() {
       this.$emit('registerItem', this.item);
       // this.clearItem();
     },
     clearItem() {
-      this.item.ingredient = '';
+      this.item.name = '';
       this.item.amount = '';
       this.item.unit = '';
     }

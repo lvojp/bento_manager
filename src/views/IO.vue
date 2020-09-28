@@ -11,7 +11,7 @@
     </div>
 
     <div class="row mb-5">
-      <button type="button" @click="textCopy()" class="btn btn-success col-md-5">{{message}}</button>
+      <button @click="textCopy" :class="copyButton">{{message}}</button>
     </div>
 
     <div class="row mb-1">
@@ -46,7 +46,8 @@ export default {
       myMenus: [],
       jsonMenusToSave: '',
       jsonMenusToLoad: '',
-      message: 'コピーする'
+      message: 'コピーする',
+      copyButton: 'btn btn-success col-md-5'
     }
   },
 
@@ -78,8 +79,10 @@ export default {
       text.select();
       document.execCommand('copy');
       this.message = 'コピー完了';
+      this.copyButton = 'btn btn-primary col-md-5'
       setTimeout(() => {
         this.message = 'コピーする';
+        this.copyButton = 'btn btn-success col-md-5'
       }, 3000);
     },
   }

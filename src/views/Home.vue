@@ -5,49 +5,50 @@
       <Header title="Home"></Header>
     </div>
 
-    <div class="row">
-      <div class="col-md-6">
-        <button type="button" @click="toEdit(-1)" class="btn btn-success mr-5">新しいメニューの作成</button>
-      </div>
-      <div class="col-md-6">
-        <button type="button" @click="toIo" class="btn btn-success mr-3">メニューの保存と呼び出し</button>
-      </div>
+    <div class="row mb-2">
+      <button type="button" @click="toIo" class="btn btn-success col-md-6">メニューの保存と呼び出し</button>
     </div>
 
-    <div class="row mb-5">
+    <div class="row">
       <table class="table col-md-12 table-striped">
-<!--        <th>No.</th>-->
+        <th>No.</th>
         <th>メニュー</th>
         <th>必要個数</th>
         <th>Edit</th>
         <tbody>
         <tr v-for="(item, index) in myMenus" :key="item.title">
-<!--          <td>{{ index }}</td>-->
+          <td>{{ index + 1 }}</td>
           <td>{{ item.title }}</td>
           <td>
-            <Counter @changeCount="caliculate($event, index)"></Counter>
+            <Counter :amount="item.amount" @changeCount="caliculate($event, index)"></Counter>
           </td>
           <td>
-            <button type="button" class="btn btn-success mr-1" @click="toEdit(index)">□</button>
-            <button type="button" class="btn btn-success" @click="deleteItem(index)">x</button>
+            <button type="button" class="btn btn-success mr-1" @click="toEdit(index)"><img src="@/assets/pen.png"
+                                                                                           alt="edit"/></button>
+            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png"
+                                                                                          alt="remove"/></button>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
 
+    <div class="row mb-5">
+      <button type="button" @click="toEdit(-1)" class="btn btn-success col-md-5 col-md-offset-7 ">新しいメニューの追加</button>
+    </div>
+
     <div class="row">
       <h3>Required Ingrement</h3>
       <table class="table col-md-12 table-striped">
-<!--        <th>No.</th>-->
+        <th>No.</th>
         <th>材料名</th>
         <th>必要個数</th>
         <th>単位</th>
         <tbody>
-<!--        <tr v-for="(item, index) in result" :key="item.ingredient">-->
-        <tr v-for="(item) in result" :key="item.ingredient">
-<!--          <td>{{ index }}</td>-->
-          <td>{{ item.ingredient }}</td>
+        <tr v-for="(item, index) in result" :key="item.name">
+          <!--        <tr v-for="(item) in result" :key="item.name">-->
+          <td>{{ index + 1 }}</td>
+          <td>{{ item.name }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.unit }}</td>
         </tr>
@@ -90,6 +91,7 @@ export default {
     for (let i = 0; i < this.myMenus.length; i++) {
       this.needAmount.push({});
     }
+    this.displayResult();
   },
 
   methods: {
@@ -144,7 +146,15 @@ export default {
     },
 
     caliculate(eventArgs, index) {
-      this.objectAdder(this.myMenus, index, eventArgs)
+      this.myMenus[index].amount = eventArgs;
+      this.saveToLocalStorage(this.myMenus, 'home')
+      this.objectAdder(this.myMenus, index, eventArgs);
+    },
+
+    displayResult() {
+      for (let i = 0; i < this.myMenus.length; i++) {
+        this.objectAdder(this.myMenus, i, this.myMenus[i].amount);
+      }
     },
 
     objectAdder(arr, idx, count) {
@@ -153,7 +163,7 @@ export default {
       //メニューの具材の個数をそれぞれカウントごとに倍加して単配列にする
       this.needAmount.splice(idx, 1, result);
       this.needAmount = this.removeZeroAmountIngredients(this.needAmount);
-      this.displayResult();
+      this.makeResult();
     },
 
     //メニューの具材の個数をそれぞれカウントごとに倍加してオブジェクトの単配列にする
@@ -162,7 +172,7 @@ export default {
       let targetMenu = arr.ingredients;
       for (let i = 0; i < targetMenu.length; i++) {
         let buf = {};
-        buf['ingredient'] = targetMenu[i].ingredient;
+        buf['name'] = targetMenu[i].name;
         buf['amount'] = parseInt(targetMenu[i].amount) * parseInt(count);
         buf['unit'] = targetMenu[i].unit;
         result.push(buf);
@@ -189,7 +199,7 @@ export default {
       return result;
     },
 
-    displayResult() {
+    makeResult() {
       // 重複チェックの後に最終結果を格納
       let result = [];
       for (let i = 0; i < this.needAmount.length; i++) {
@@ -213,9 +223,9 @@ export default {
         let buf = {};
         let amount = 0;
         let unit = '';
-        buf['ingredient'] = item;
+        buf['name'] = item;
         arr.forEach(function (obj) {
-          if (item === obj.ingredient) {
+          if (item === obj.name) {
             amount += obj.amount;
             unit = obj.unit;
           }
@@ -231,7 +241,7 @@ export default {
     extractUniqueMenuNames(arr) {
       let buf = [];
       for (let i = 0; i < arr.length; i++) {
-        buf.push(arr[i].ingredient);
+        buf.push(arr[i].name);
       }
       let result = buf.filter(function (x, i, self) {
         return self.indexOf(x) === i;

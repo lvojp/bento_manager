@@ -13,6 +13,7 @@ import utilsMixin from '@/mixins/utils.js'
 export default {
   mixins: [utilsMixin],
   name: "PlusMinus",
+  props: ['amount'],
 
   data: function () {
     return {
@@ -20,7 +21,14 @@ export default {
     }
   },
 
+  beforeMount() {
+    this.setValue(this.amount)
+  },
+
   methods: {
+    setValue(n){
+      this.value = n
+    },
     // 数量をプラスボタンで変更時
     countUp() {
       this.value++;

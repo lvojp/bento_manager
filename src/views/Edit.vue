@@ -17,7 +17,7 @@
       </form>
     </div>
 
-    <IngredientRegister @registerItem="appendIngredient"></IngredientRegister>
+    <IngredientRegister :propItem="currentItem" @registerItem="appendIngredient"></IngredientRegister>
 
     <div class="row mb-5">
       <table class="table table-striped col-md-12">
@@ -28,14 +28,14 @@
         <th>Edit</th>
 
         <tbody>
-        <tr v-for="(item, index) in myMenu.ingredients" v-bind:key="item.ingredient">
+        <tr v-for="(item, index) in myMenu.ingredients" v-bind:key="item.name">
           <td>{{ index }}</td>
-          <td>{{ item.ingredient }}</td>
+          <td>{{ item.name }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.unit }}</td>
           <td>
-            <button type="button" class="btn btn-success mr-1" @click="editItem(index)">□</button>
-            <button type="button" class="btn btn-success" @click="deleteItem(index)">x</button>
+            <button type="button" class="btn btn-success mr-1" @click="editItem(index)"><img src="@/assets/pen.png" alt="edit" /></button>
+            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png" alt="remove" /></button>
           </td>
         </tr>
         </tbody>
@@ -81,6 +81,11 @@ export default {
         title: '',
         amount: 0,
         ingredients: []
+      },
+      currentItem: {
+        name: '',
+        amount: '',
+        unit: ''
       }
     }
   },
@@ -113,15 +118,13 @@ export default {
     },
     // アイテムの編集
     editItem(index) {
-      let m = this.myMenu.ingredients[index].ingredient;
-      let v = this.myMenu.ingredients[index].amount;
-      let u = this.myMenu.ingredients[index].unit;
+      let name = this.myMenu.ingredients[index].name;
+      let amount = this.myMenu.ingredients[index].amount;
+      let unit = this.myMenu.ingredients[index].unit;
 
-      // 各inputのvalueに入力
-      document.getElementById('input-ingredient').value = m;
-      document.getElementById('input-amount').value = v;
-      document.getElementById('input-unit').value = u;
-
+      this.currentItem.name = name;
+      this.currentItem.amount = amount;
+      this.currentItem.unit = unit;
       // this.items[index].material = this.item
     },
     loadMenu() {
