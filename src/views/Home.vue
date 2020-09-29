@@ -123,12 +123,12 @@ export default {
     },
 
     calculation(eventArgs, index) {
-      this.saveToLocalStorage(this.myMenus, 'home')
       this.objectAdder(this.myMenus, index, eventArgs);
+      this.saveToLocalStorage(this.myMenus, 'home')
     },
 
     objectAdder(arr, idx, count) {
-      //メニューの具材の個数をそれぞれカウントごとに倍加して単配列にする
+      arr[idx].amount = count;
       let result = this.serializeIngredients(arr[idx], count)
       //メニューの具材の個数をそれぞれカウントごとに倍加して単配列にする
       let test2 = this.needAmount;
