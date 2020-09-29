@@ -6,7 +6,7 @@
     </div>
 
     <div class="row mb-2">
-      <button type="button" @click="toIo" class="btn btn-success col-md-6">メニューの保存と呼び出し</button>
+      <button type="button" @click="toIo" class="btn btn-warning col-md-6">メニューの保存と呼び出し</button>
     </div>
 
     <div class="row">
@@ -17,16 +17,14 @@
         <th>Edit</th>
         <tbody>
         <tr v-for="(item, index) in myMenus" :key="item.title">
-          <td>{{ index + 1 }}</td>
+          <td>{{ index }}</td>
           <td>{{ item.title }}</td>
           <td>
-            <Counter :amount="item.amount" @changeCount="caliculate($event, index)"></Counter>
+            <Counter :amount="item.amount" @changeCount="calculation($event, index)"></Counter>
           </td>
           <td>
-            <button type="button" class="btn btn-success mr-1" @click="toEdit(index)"><img src="@/assets/pen.png"
-                                                                                           alt="edit"/></button>
-            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png"
-                                                                                          alt="remove"/></button>
+            <button type="button" class="btn btn-success mr-1" @click="toEdit(index)"><img src="@/assets/pen.png" alt="edit"/></button>
+            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png" alt="remove"/></button>
           </td>
         </tr>
         </tbody>
@@ -38,7 +36,7 @@
     </div>
 
     <div class="row">
-      <h3>Required Ingrement</h3>
+      <h3>必要な材料リスト</h3>
       <table class="table col-md-12 table-striped">
         <th>No.</th>
         <th>材料名</th>
@@ -47,7 +45,7 @@
         <tbody>
         <tr v-for="(item, index) in result" :key="item.name">
           <!--        <tr v-for="(item) in result" :key="item.name">-->
-          <td>{{ index + 1 }}</td>
+          <td>{{ index }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.unit }}</td>
@@ -117,10 +115,42 @@ export default {
     },
 
     deleteItem(idx) {
-      this.objectAdder(this.myMenus, idx, 0)
+      this.myMenus[idx].amount = 0;
+      this.needAmount.splice(idx, 1);
+      this.makeResult();
       this.myMenus.splice(idx, 1);
-      // this.homeMenus = this.objectCopy(this.myMenus);
       this.saveToLocalStorage(this.myMenus, 'home')
+    },
+
+    calculation(eventArgs, index) {
+      this.saveToLocalStorage(this.myMenus, 'home')
+      this.objectAdder(this.myMenus, index, eventArgs);
+    },
+
+    objectAdder(arr, idx, count) {
+      //メニューの具材の個数をそれぞれカウントごとに倍加して単配列にする
+      let result = this.serializeIngredients(arr[idx], count)
+      //メニューの具材の個数をそれぞれカウントごとに倍加して単配列にする
+      let test2 = this.needAmount;
+      this.needAmount.splice(idx, 1, result);
+      let test = this.needAmount;
+      this.needAmount = this.removeZeroAmountIngredients(this.needAmount);
+      this.makeResult();
+    },
+
+    objectDeleter(arr, idx) {
+    },
+
+    makeResult() {
+      // 重複チェックの後に最終結果を格納
+      let result = [];
+      for (let i = 0; i < this.needAmount.length; i++) {
+        for (let j = 0; j < this.needAmount[i].length; j++) {
+          result.push(this.needAmount[i][j]);
+        }
+      }
+      let buf = this.removeSameIngredient(result);
+      this.result = this.removeZeroAmountIngredients(buf);
     },
 
     loadMenus() {
@@ -141,29 +171,10 @@ export default {
       }
     },
 
-    saveMenusFromJson() {
-      alert(JSON.stringify(this.myMenus))
-    },
-
-    caliculate(eventArgs, index) {
-      this.myMenus[index].amount = eventArgs;
-      this.saveToLocalStorage(this.myMenus, 'home')
-      this.objectAdder(this.myMenus, index, eventArgs);
-    },
-
     displayResult() {
       for (let i = 0; i < this.myMenus.length; i++) {
         this.objectAdder(this.myMenus, i, this.myMenus[i].amount);
       }
-    },
-
-    objectAdder(arr, idx, count) {
-      //メニューの具材の個数をそれぞれカウントごとに倍加して単配列にする
-      let result = this.serializeIngredients(arr[idx], count)
-      //メニューの具材の個数をそれぞれカウントごとに倍加して単配列にする
-      this.needAmount.splice(idx, 1, result);
-      this.needAmount = this.removeZeroAmountIngredients(this.needAmount);
-      this.makeResult();
     },
 
     //メニューの具材の個数をそれぞれカウントごとに倍加してオブジェクトの単配列にする
@@ -197,18 +208,6 @@ export default {
         result.splice(list[i], 1);
       }
       return result;
-    },
-
-    makeResult() {
-      // 重複チェックの後に最終結果を格納
-      let result = [];
-      for (let i = 0; i < this.needAmount.length; i++) {
-        for (let j = 0; j < this.needAmount[i].length; j++) {
-          result.push(this.needAmount[i][j]);
-        }
-      }
-      let buf = this.removeSameIngredient(result);
-      this.result = this.removeZeroAmountIngredients(buf);
     },
 
     removeSameIngredient(arr) {

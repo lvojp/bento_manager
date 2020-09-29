@@ -4,6 +4,15 @@
       <Header title="Save and Load"></Header>
     </div>
 
+    <div class="row mb-4">
+      <p>
+        (1): 入力した情報を保存する場合には、「セーブ用」テキストボックスに出力されたデータ文字列をコピーボタンでコピーし、ノートパッドなどに保管してください。
+      </p>
+      <p>
+        (2): 保存した情報を復元したい場合には、(1)で保管した文字列を「ロード用」テキストボックスに貼り付けて「ロードしてホームに戻る」ボタンを押してください。
+      </p>
+    </div>
+
     <div class="row mb-1">
       <h3>セーブ用</h3>
       <textarea class="col-md-12" id="text-to-save" name="toSaveJson" v-model="jsonMenusToSave" cols="100" rows="10"></textarea>
