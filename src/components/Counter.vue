@@ -26,7 +26,7 @@ export default {
   },
 
   methods: {
-    setValue(n){
+    setValue(n) {
       this.value = n
     },
     // 数量をプラスボタンで変更時

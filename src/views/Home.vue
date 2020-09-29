@@ -1,4 +1,10 @@
-<script src="../mixins/utils.js"></script>
+<script>
+import Footer from "@/components/Footer";
+
+export default {
+  components: {Footer}
+}
+</script>
 <template>
   <div class="container">
     <div class="row">
@@ -23,16 +29,20 @@
             <Counter :amount="item.amount" @changeCount="calculation($event, index)"></Counter>
           </td>
           <td>
-            <button type="button" class="btn btn-success mr-1" @click="toEdit(index)"><img src="@/assets/pen.png" alt="edit"/></button>
-            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png" alt="remove"/></button>
+            <button type="button" class="btn btn-success mr-1" @click="toEdit(index)"><img src="@/assets/pen.png"
+                                                                                           alt="edit"/></button>
+            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png"
+                                                                                          alt="remove"/></button>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="row mb-5">
-      <button type="button" @click="toEdit(-1)" class="btn btn-success col-md-5 col-md-offset-7 ">新しいメニューの追加</button>
+    <div class="row mb-5 d-block">
+      <div class="text-right">
+        <button type="button" @click="toEdit(-1)" class="btn btn-success col-md-5 col-md-offset-7 ">新しいメニューの追加</button>
+      </div>
     </div>
 
     <div class="row">
@@ -53,6 +63,10 @@
         </tbody>
       </table>
     </div>
+
+    <Footer></Footer>
+
+
     <!--    <p>{{needAmount}}</p>-->
 
   </div>
@@ -61,6 +75,7 @@
 
 <script>
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import Counter from '@/components/Counter'
 import utilsMixin from '@/mixins/utils.js'
 
@@ -80,8 +95,9 @@ export default {
   },
 
   components: {
-    Counter,
     Header,
+    Footer,
+    Counter
   },
 
   beforeMount() {

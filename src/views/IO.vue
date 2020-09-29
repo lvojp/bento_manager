@@ -15,18 +15,19 @@
 
     <div class="row mb-1">
       <h3>セーブ用</h3>
-      <textarea class="col-md-12" id="text-to-save" name="toSaveJson" v-model="jsonMenusToSave" cols="100" rows="10"></textarea>
-<!--      <p>{{jsonMenusToSave}}</p>-->
+      <textarea class="col-md-12" id="text-to-save" name="toSaveJson" v-model="jsonMenusToSave" cols="100"
+                rows="10"></textarea>
+      <!--      <p>{{jsonMenusToSave}}</p>-->
     </div>
 
     <div class="row mb-5">
-      <button @click="textCopy" :class="copyButton">{{message}}</button>
+      <button @click="textCopy" :class="copyButton">{{ message }}</button>
     </div>
 
     <div class="row mb-1">
       <h3>ロード用</h3>
       <textarea class="col-md-12" name="toLoadJson" v-model="jsonMenusToLoad" cols="100" rows="10"></textarea>
-<!--      <p>{{jsonMenusToLoad}}</p>-->
+      <!--      <p>{{jsonMenusToLoad}}</p>-->
     </div>
 
     <div class="row">
@@ -74,11 +75,11 @@ export default {
     },
 
     loadMenus() {
-      try{
+      try {
         this.myMenus = JSON.parse(this.jsonMenusToLoad);
         this.toHome()
 
-      }catch (e) {
+      } catch (e) {
         alert('ファイルが壊れています' + e);
       }
     },

@@ -34,8 +34,10 @@
           <td>{{ item.amount }}</td>
           <td>{{ item.unit }}</td>
           <td>
-            <button type="button" class="btn btn-success mr-1" @click="editItem(index)"><img src="@/assets/pen.png" alt="edit" /></button>
-            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png" alt="remove" /></button>
+            <button type="button" class="btn btn-success mr-1" @click="editItem(index)"><img src="@/assets/pen.png"
+                                                                                             alt="edit"/></button>
+            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png"
+                                                                                          alt="remove"/></button>
           </td>
         </tr>
         </tbody>
@@ -52,6 +54,8 @@
         </template>
       </div>
     </div>
+
+    <Footer></Footer>
     <!--    <p>{{isUpdate}}</p>-->
 
   </div>
@@ -59,6 +63,7 @@
 
 <script>
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import IngredientRegister from "@/components/IngredientRegister";
 import utilsMixin from '@/mixins/utils.js'
 
@@ -67,6 +72,7 @@ export default {
   name: "Edit",
   components: {
     Header,
+    Footer,
     IngredientRegister
   },
   props: {

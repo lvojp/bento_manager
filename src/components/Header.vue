@@ -2,7 +2,7 @@
   <div class="row">
 
     <header class="my-5 col-md-12 text-primary">
-      <h1 class="text-center"><a @click="backToTop" href="#">材料マネージャー ver0.81</a></h1>
+      <h1 class="text-center"><a @click="backToTop" href="#">材料マネージャー ver0.84</a></h1>
       <!--      <h2 class="text-left">{{ title }}</h2>-->
     </header>
   </div>
