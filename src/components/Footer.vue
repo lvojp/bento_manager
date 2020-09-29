@@ -7,5 +7,6 @@
 
     <p class="text-center d-block">copyright© <a href="https://giraffeong.com" target="_blank">G線上のきりん</a> All rights
       reserved.</p>
+
   </footer>
 </template>

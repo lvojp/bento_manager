@@ -66,7 +66,6 @@ export default {
 
     <Footer></Footer>
 
-
     <!--    <p>{{needAmount}}</p>-->
 
   </div>
