@@ -130,11 +130,14 @@ export default {
     },
 
     deleteItem(idx) {
-      this.myMenus[idx].amount = 0;
-      this.needAmount.splice(idx, 1);
-      this.makeResult();
-      this.myMenus.splice(idx, 1);
-      this.saveToLocalStorage(this.myMenus, 'home')
+      let c = confirm('メニューを削除してもよろしいですか？')
+      if ( c === true) {
+        this.myMenus[idx].amount = 0;
+        this.needAmount.splice(idx, 1);
+        this.makeResult();
+        this.myMenus.splice(idx, 1);
+        this.saveToLocalStorage(this.myMenus, 'home')
+      }
     },
 
     calculation(eventArgs, index) {

@@ -1,17 +1,10 @@
 import Vue from 'vue';
-import VueAnalytics from "vue-analytics";
 import Router from 'vue-router';
 import Home from '@/views/Home';
 import Edit from '@/views/Edit';
 import IO from '@/views/IO';
 
-Vue.use(VueAnalytics,{
-   id: 'UA-66236933-2',
-   Router
-});
-
 Vue.use(Router);
-
 export default new Router({
    // mode: "history",
    routes: [{
@@ -31,4 +24,5 @@ export default new Router({
       props: true
    }]
 });
+
 
