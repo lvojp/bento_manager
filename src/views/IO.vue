@@ -30,7 +30,7 @@
       <!--      <p>{{jsonMenusToLoad}}</p>-->
     </div>
 
-    <div class="row">
+    <div class="row mb-5">
       <button type="button" @click="loadMenus" class="btn btn-success col-md-5">ロードしてホームに戻る</button>
     </div>
 

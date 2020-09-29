@@ -6,7 +6,8 @@ import Edit from '@/views/Edit';
 import IO from '@/views/IO';
 
 Vue.use(VueAnalytics,{
-  id: 'UA-66236933-2'
+   id: 'UA-66236933-2',
+   Router
 });
 
 Vue.use(Router);
@@ -30,3 +31,4 @@ export default new Router({
       props: true
    }]
 });
+
