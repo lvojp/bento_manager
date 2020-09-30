@@ -11,9 +11,6 @@ export default {
       <Header title="Home"></Header>
     </div>
 
-    <div class="row mb-2">
-      <button type="button" @click="toIo" class="btn btn-warning col-md-6">メニューの保存と呼び出し</button>
-    </div>
 
     <div class="row">
       <table class="table col-md-12 table-striped">
@@ -23,7 +20,7 @@ export default {
         <th>Edit</th>
         <tbody>
         <tr v-for="(item, index) in myMenus" :key="item.title">
-          <td>{{ index }}</td>
+          <td>{{ index + 1 }}</td>
           <td>{{ item.title }}</td>
           <td>
             <Counter :amount="item.amount" @changeCount="calculation($event, index)"></Counter>
@@ -55,13 +52,19 @@ export default {
         <tbody>
         <tr v-for="(item, index) in result" :key="item.name">
           <!--        <tr v-for="(item) in result" :key="item.name">-->
-          <td>{{ index }}</td>
+          <td>{{ index + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.unit }}</td>
         </tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="row mt-5 d-block">
+      <div class="text-center">
+        <button type="button" @click="toIo" class="btn btn-warning col-md-6">メニューの保存と呼び出し</button>
+      </div>
     </div>
 
     <Footer></Footer>
@@ -131,7 +134,7 @@ export default {
 
     deleteItem(idx) {
       let c = confirm('メニューを削除してもよろしいですか？')
-      if ( c === true) {
+      if (c === true) {
         this.myMenus[idx].amount = 0;
         this.needAmount.splice(idx, 1);
         this.makeResult();
