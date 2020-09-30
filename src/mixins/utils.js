@@ -90,6 +90,42 @@ export default {
       }catch (e) {
         return false;
       }
-    }
+    },
+    // 数量を直接編集時
+    checkNum(s) {
+      let n = 0;
+      if (!isNaN(s)) {
+        // 数字の場合
+        n = s;
+        // 0以上チェック
+        if (n > 0) {
+          // OK
+          // 整数チェック
+          if (this.isInteger(n)) {
+            // OK
+            // this.emitter();
+            return true
+          } else {
+            // NG
+            alert('入力値は整数で入力してください。');
+            // this.value = 0;
+            // this.emitter();
+            return false
+          }
+        } else {
+          // NG
+          // alert('入力値は0以上を入力してください。');
+          // this.value = 0;
+          // this.emitter();
+          return false
+        }
+      } else {
+        // alert('入力値は0以上の整数を半角英数で入力してください。');
+        // this.value = 0;
+        // this.emitter();
+        return false
+      }
+    },
+
   }
 }

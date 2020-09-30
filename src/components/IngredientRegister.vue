@@ -23,7 +23,12 @@
               type="number"
               id="input-amount"
               v-model="item.amount"
+              @change="checkNumInput(item.amount)"
               class="form-control"
+              pattern="\d*"
+              oncopy="return false"
+              onpaste="return false"
+              style="ime-mode:disabled"
           >
         </div>
 
@@ -44,8 +49,10 @@
 
 <script>
 // import InputSet from '@/components/Register/InputSet'
+import utilsMixin from '@/mixins/utils.js'
 
 export default {
+  mixins: [utilsMixin],
   components: {
     // InputSet
   },
@@ -76,13 +83,34 @@ export default {
     },
 
     register() {
-      this.$emit('registerItem', this.item);
+      if (this.inputClear()) {
+        this.$emit('registerItem', this.item);
+      }else{
+        alert('材料名、量、単位の項目は入力必須です');
+      }
       // this.clearItem();
     },
     clearItem() {
       this.item.name = '';
       this.item.amount = '';
       this.item.unit = '';
+    },
+    inputClear() {
+      if (this.item.name === '') {
+        return false;
+      }
+      if (this.item.amount === '') {
+        return false;
+      }
+      if (this.item.unit === '') {
+        return false;
+      }
+      return true;
+    },
+    checkNumInput(s){
+      if (!this.checkNum(s)) {
+        this.item.amount = 1;
+      }
     }
   },
 }

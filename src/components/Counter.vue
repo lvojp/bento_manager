@@ -1,7 +1,15 @@
 <template>
   <div>
     <button type="button" class="btn btn-success" @click="countDown">-</button>
-    <input type="text" v-model="value" @change="handleInput(value)" class="mx-1 w-25">
+    <input type="text"
+           v-model="value"
+           @change="checkNumInput(value)"
+           class="mx-1 w-25"
+           pattern="\d*"
+           oncopy="return false"
+           onpaste="return false"
+           style="ime-mode:disabled"
+    >
     <button type="button" class="btn btn-success" @click="countUp">+</button>
     <!--    <p>{{ value }}</p>-->
   </div>
@@ -41,40 +49,16 @@ export default {
       }
       this.emitter();
     },
-    // 数量を直接編集時
-    handleInput(s) {
-      let n = 0;
-      if (!isNaN(s)) {
-        // 数字の場合
-        n = s;
-        // 0以上チェック
-        if (n > 0) {
-          // OK
-          // 整数チェック
-          if (this.isInteger(n)) {
-            // OK
-            this.emitter();
-          } else {
-            // NG
-            alert('入力値は整数で入力してください。');
-            this.value = 0;
-            this.emitter();
-          }
-        } else {
-          // NG
-          // alert('入力値は0以上を入力してください。');
-          this.value = 0;
-          this.emitter();
-        }
-      } else {
-        // alert('入力値は0以上の整数を半角英数で入力してください。');
-        this.value = 0;
-        this.emitter();
-      }
-    },
     // 親コンポネントに値を転送
     emitter() {
       this.$emit('changeCount', this.value)
+    },
+    checkNumInput(s) {
+      if (this.checkNum(s)) {
+        this.emitter();
+      }else{
+        this.value = 0;
+      }
     }
   }
 }
