@@ -29,7 +29,7 @@
 
         <tbody>
         <tr v-for="(item, index) in myMenu.ingredients" v-bind:key="item.name">
-          <td>{{ index }}</td>
+          <td>{{ index + 1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.amount }}</td>
           <td>{{ item.unit }}</td>
@@ -91,7 +91,7 @@ export default {
       currentItem: {
         name: '',
         amount: '',
-        unit: ''
+        unit: '個'
       }
     }
   },

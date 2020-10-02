@@ -58,6 +58,7 @@ export default {
         this.emitter();
       }else{
         this.value = 0;
+        this.emitter();
       }
     }
   }
