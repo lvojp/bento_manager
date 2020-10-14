@@ -1,20 +1,20 @@
 <template>
   <div class="container">
+    <Header title="MenuEditor"></Header>
     <div class="row">
-      <Header title="MenuEditor"></Header>
-      <form class="col-md-12 form-inline text-center mb-5">
-        <div class="form-group">
-          <label class="pr-1">
-            メニュー
-          </label>
-          <input
-              type="text"
-              v-model="myMenu.title"
-              placeholder="New Menu"
-              class="form-control"
-          >
-        </div>
-      </form>
+      <div class="col-md-10 mb-5">
+        <form class="form-inline">
+            <label class="pr-1">
+              メニュー名
+            </label>
+            <input
+                type="text"
+                v-model="myMenu.title"
+                placeholder="New Menu"
+                class="form-control col-md-8"
+            >
+        </form>
+      </div>
     </div>
 
     <IngredientRegister :propItem="currentItem" @registerItem="appendIngredient"></IngredientRegister>
