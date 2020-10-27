@@ -24,7 +24,8 @@
     "eslint-plugin-vue": "^6.2.2",
     "jquery": "^3.5.1",
     "vue-router": "^3.4.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuedraggable": "^2.24.3"
   },
   "eslintConfig": {
     "root": true,

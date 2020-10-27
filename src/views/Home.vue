@@ -15,12 +15,22 @@ export default {
     <div class="row">
       <button type="button" class="btn btn-success mb-2" @click="resetCounts()">必要個数をすべて0に戻す</button>
       <table class="table col-md-12 table-striped" id="menus">
-        <th>No.</th>
-        <th>メニュー</th>
-        <th>必要個数</th>
-        <th>Edit</th>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>メニュー</th>
+            <th>必要個数</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
         <tbody>
-        <tr v-for="(item, index) in myMenus" :key="item.title">
+        <tr v-for="(item, index) in myMenus" :key="item.title" class="grabbable"
+            draggable
+            @dragstart="dragList($event, index)"
+            @drop="dropList($event, index)"
+            @dragover.prevent
+            @dragenter.prevent
+        >
           <td>{{ index + 1 }}</td>
           <td>{{ item.title }}</td>
           <td>
@@ -81,6 +91,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Counter from '@/components/Counter'
 import utilsMixin from '@/mixins/utils.js'
+import draggable from 'vuedraggable'
 
 export default {
   mixins: [utilsMixin],
@@ -100,7 +111,8 @@ export default {
   components: {
     Header,
     Footer,
-    Counter
+    Counter,
+    draggable
   },
 
   beforeMount() {
@@ -271,8 +283,6 @@ export default {
     },
 
     resetCounts() {
-      console.log(this.myMenus[0]);
-
       let c = confirm('必要個数をすべて0に戻します。よろしいですか？');
       if (c === true) {
         for (let i = 0; i < this.myMenus.length; i++) {
@@ -280,6 +290,21 @@ export default {
           location.reload();
         }
       }
+    },
+
+    dragList(event, dragIndex){
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.dropEffect = 'move';
+      event.dataTransfer.setData('drag-index', dragIndex);
+      // const deleteList = this.myMenus.splice(dragIndex, 1);
+      // console.log(deleteList[0]);
+    },
+
+    dropList(event, dropIndex){
+      const dragIndex = event.dataTransfer.getData('drag-index');
+      const deleteList = this.myMenus.splice(dragIndex, 1);
+      this.myMenus.splice(dropIndex, 0, deleteList[0]);
+      this.saveToLocalStorage(this.myMenus, 'home')
     }
   },
 
@@ -290,3 +315,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+.grabbable:hover{
+  cursor: grab;
+}
+.grabbable:active{
+  cursor: grabbing;
+}
+
+</style>
