@@ -13,7 +13,8 @@ export default {
 
 
     <div class="row">
-      <table class="table col-md-12 table-striped">
+      <button type="button" class="btn btn-success mb-2" @click="resetCounts()">必要個数をすべて0に戻す</button>
+      <table class="table col-md-12 table-striped" id="menus">
         <th>No.</th>
         <th>メニュー</th>
         <th>必要個数</th>
@@ -28,8 +29,8 @@ export default {
           <td>
             <button type="button" class="btn btn-success mr-1" @click="toEdit(index)"><img src="@/assets/pen.png"
                                                                                            alt="edit"/></button>
-            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png"
-                                                                                          alt="remove"/></button>
+<!--            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png"-->
+<!--                                                                                          alt="remove"/></button>-->
           </td>
         </tr>
         </tbody>
@@ -267,6 +268,18 @@ export default {
         return self.indexOf(x) === i;
       });
       return result;
+    },
+
+    resetCounts() {
+      console.log(this.myMenus[0]);
+
+      let c = confirm('必要個数をすべて0に戻します。よろしいですか？');
+      if (c === true) {
+        for (let i = 0; i < this.myMenus.length; i++) {
+          this.calculation(0, i);
+          location.reload();
+        }
+      }
     }
   },
 
