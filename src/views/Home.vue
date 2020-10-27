@@ -23,27 +23,32 @@ export default {
             <th>Edit</th>
           </tr>
         </thead>
-        <tbody>
-        <tr v-for="(item, index) in myMenus" :key="item.title" class="grabbable"
-            draggable
-            @dragstart="dragList($event, index)"
-            @drop="dropList($event, index)"
-            @dragover.prevent
-            @dragenter.prevent
+        <draggable
+            v-model="myMenus"
+            tag="tbody"
+            draggable="tr"
+            v-bind:options="{
+              animation: 200,
+              delay: 50
+            }"
+            @end="drag=dragEnd()"
         >
-          <td>{{ index + 1 }}</td>
-          <td>{{ item.title }}</td>
-          <td>
-            <Counter :amount="item.amount" @changeCount="calculation($event, index)"></Counter>
-          </td>
-          <td>
-            <button type="button" class="btn btn-success mr-1" @click="toEdit(index)"><img src="@/assets/pen.png"
-                                                                                           alt="edit"/></button>
-<!--            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png"-->
-<!--                                                                                          alt="remove"/></button>-->
-          </td>
-        </tr>
-        </tbody>
+          <tr v-for="(item, index) in myMenus" :key="item.title" class="grabbable" >
+            <td>{{ index + 1 }}</td>
+            <td>{{ item.title }}</td>
+            <td>
+              <Counter :amount="item.amount" @changeCount="calculation($event, index)"></Counter>
+            </td>
+            <td>
+              <button type="button" class="btn btn-success mr-1" @click="toEdit(index)">
+                <img src="@/assets/pen.png" alt="edit"/>
+              </button>
+              <button type="button" class="btn btn-success" @click="deleteItem(index)">
+                <img src="@/assets/trashbox.png" alt="remove"/>
+              </button>
+            </td>
+          </tr>
+        </draggable>
       </table>
     </div>
 
@@ -104,7 +109,7 @@ export default {
     return {
       myMenus: [],
       needAmount: [],
-      result: []
+      result: [],
     }
   },
 
@@ -292,18 +297,7 @@ export default {
       }
     },
 
-    dragList(event, dragIndex){
-      event.dataTransfer.effectAllowed = 'move';
-      event.dataTransfer.dropEffect = 'move';
-      event.dataTransfer.setData('drag-index', dragIndex);
-      // const deleteList = this.myMenus.splice(dragIndex, 1);
-      // console.log(deleteList[0]);
-    },
-
-    dropList(event, dropIndex){
-      const dragIndex = event.dataTransfer.getData('drag-index');
-      const deleteList = this.myMenus.splice(dragIndex, 1);
-      this.myMenus.splice(dropIndex, 0, deleteList[0]);
+    dragEnd(){
       this.saveToLocalStorage(this.myMenus, 'home')
     }
   },
