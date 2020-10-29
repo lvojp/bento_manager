@@ -14,7 +14,7 @@ export default {
 
     <div class="row">
       <button type="button" class="col-md-3 btn btn-warning mb-2" @click="resetCounts()">必要個数をすべて0に戻す</button>
-      <button type="button" id="edit-button" class="offset-7 col-md-2 btn btn-danger mb-2" @click="switchEditUI()">編集ボタンの表示</button>
+      <button type="button" id="edit-button" class="offset-6 col-md-3 btn btn-danger mb-2" @click="switchEditUI()">編集ボタンの表示</button>
 
       <table class="table col-md-12 table-striped" id="menus">
         <thead>
@@ -41,7 +41,7 @@ export default {
             <td>
               <Counter :amount="item.amount" @changeCount="calculation($event, index)"></Counter>
             </td>
-            <td>
+            <td v-if="isShowEdit">
               <button v-if="isShowEdit" type="button" class="btn btn-success mr-1" @click="toEdit(index)">
                 <img src="@/assets/pen.png" alt="edit"/>
               </button>
@@ -58,6 +58,24 @@ export default {
       <div class="text-right">
         <button type="button" @click="toEdit(-1)" class="btn btn-success col-md-5 col-md-offset-7 ">新しいメニューの追加</button>
       </div>
+    </div>
+
+    <div class="row mb-4">
+      <h3>注文されているメニュー</h3>
+      <table class="table col-md-12 table-striped">
+<!--        <th>No.</th>-->
+        <th>メニュー名</th>
+        <th>個数</th>
+        <tbody>
+<!--        <tr v-for="(item, index) in myMenus " :key="item.name">-->
+        <tr v-for="(item) in myMenus " :key="item.name">
+          <!--        <tr v-for="(item) in result" :key="item.name">-->
+<!--          <td v-if="item.amount > 0">{{ index + 1 }}</td>-->
+          <td v-if="item.amount > 0">{{ item.title }}</td>
+          <td v-if="item.amount > 0">{{ item.amount }}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="row">
