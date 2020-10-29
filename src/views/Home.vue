@@ -13,14 +13,16 @@ export default {
 
 
     <div class="row">
-      <button type="button" class="btn btn-success mb-2" @click="resetCounts()">必要個数をすべて0に戻す</button>
+      <button type="button" class="col-md-3 btn btn-warning mb-2" @click="resetCounts()">必要個数をすべて0に戻す</button>
+      <button type="button" id="edit-button" class="offset-7 col-md-2 btn btn-danger mb-2" @click="switchEditUI()">編集ボタンの表示</button>
+
       <table class="table col-md-12 table-striped" id="menus">
         <thead>
           <tr>
             <th>No.</th>
             <th>メニュー</th>
             <th>必要個数</th>
-            <th>Edit</th>
+            <th v-if="isShowEdit">Edit</th>
           </tr>
         </thead>
         <draggable
@@ -28,8 +30,8 @@ export default {
             tag="tbody"
             draggable="tr"
             v-bind:options="{
-              animation: 200,
-              delay: 50
+              animation: 300,
+              delay: 150, //150以下の場合、input:textにカーソルが上手く行かない
             }"
             @end="drag=dragEnd()"
         >
@@ -40,10 +42,10 @@ export default {
               <Counter :amount="item.amount" @changeCount="calculation($event, index)"></Counter>
             </td>
             <td>
-              <button type="button" class="btn btn-success mr-1" @click="toEdit(index)">
+              <button v-if="isShowEdit" type="button" class="btn btn-success mr-1" @click="toEdit(index)">
                 <img src="@/assets/pen.png" alt="edit"/>
               </button>
-              <button type="button" class="btn btn-success" @click="deleteItem(index)">
+              <button v-if="isShowEdit" type="button" class="btn btn-success" @click="deleteItem(index)">
                 <img src="@/assets/trashbox.png" alt="remove"/>
               </button>
             </td>
@@ -97,6 +99,7 @@ import Footer from '@/components/Footer'
 import Counter from '@/components/Counter'
 import utilsMixin from '@/mixins/utils.js'
 import draggable from 'vuedraggable'
+import $ from 'jquery'
 
 export default {
   mixins: [utilsMixin],
@@ -107,6 +110,7 @@ export default {
 
   data() {
     return {
+      isShowEdit: false,
       myMenus: [],
       needAmount: [],
       result: [],
@@ -294,6 +298,21 @@ export default {
           this.calculation(0, i);
           location.reload();
         }
+      }
+    },
+
+    switchEditUI(){
+      if(this.isShowEdit === true){
+        this.isShowEdit = false;
+        $('#edit-button').text('編集メニューを表示')
+        $('#edit-button').addClass('btn-danger')
+        $('#edit-button').removeClass('btn-success')
+
+      }else{
+        this.isShowEdit = true;
+        $('#edit-button').text('編集メニューを非表示')
+        $('#edit-button').addClass('btn-success')
+        $('#edit-button').removeClass('btn-danger')
       }
     },
 
