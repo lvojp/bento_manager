@@ -245,7 +245,7 @@ export default {
       for (let i = 0; i < targetMenu.length; i++) {
         let buf = {};
         buf['name'] = targetMenu[i].name;
-        buf['amount'] = parseInt(targetMenu[i].amount) * parseInt(count);
+        buf['amount'] = this.roundFloat(parseFloat(targetMenu[i].amount) * parseInt(count),2);
         buf['unit'] = targetMenu[i].unit;
         result.push(buf);
       }

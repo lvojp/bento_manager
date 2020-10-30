@@ -78,6 +78,7 @@ export default {
       });
       return arr;
     },
+
     // 整数チェック
     isInteger(x){
       try {
@@ -98,27 +99,7 @@ export default {
         // 数字の場合
         n = s;
         // 0以上チェック
-        if (n > 0) {
-          // OK
-          // 整数チェック
-          if (this.isInteger(n)) {
-            // OK
-            // this.emitter();
-            return true
-          } else {
-            // NG
-            alert('入力値は整数で入力してください。');
-            // this.value = 0;
-            // this.emitter();
-            return false
-          }
-        } else {
-          // NG
-          // alert('入力値は0以上を入力してください。');
-          // this.value = 0;
-          // this.emitter();
-          return false
-        }
+        return n > 0;
       } else {
         // alert('入力値は0以上の整数を半角英数で入力してください。');
         // this.value = 0;
@@ -126,6 +107,11 @@ export default {
         return false
       }
     },
+
+    roundFloat(number, n) {
+      let pow = Math.pow(10, n);
+      return Math.round(number * pow) / pow;
+    }
 
   }
 }
