@@ -123,7 +123,8 @@ export default {
   mixins: [utilsMixin],
   name: 'App',
   props: {
-    homeMenus: Array
+    homeMenus: Array,
+    uiStatus: Boolean
   },
 
   data() {
@@ -143,6 +144,7 @@ export default {
   },
 
   beforeMount() {
+    this.setUiStatus();
     this.loadMenus();
     for (let i = 0; i < this.myMenus.length; i++) {
       this.needAmount.push({});
@@ -170,6 +172,10 @@ export default {
           ioMenus: this.myMenus,
         }
       });
+    },
+
+    setUiStatus() {
+      this.isShowEdit = this.uiStatus;
     },
 
     deleteItem(idx) {
@@ -325,15 +331,17 @@ export default {
     switchEditUI(){
       if(this.isShowEdit === true){
         this.isShowEdit = false;
-        $('#edit-button').text('編集メニューを表示')
-        $('#edit-button').addClass('btn-danger')
-        $('#edit-button').removeClass('btn-success')
+        let target = $('#edit-button');
+        target.text('編集メニューを表示')
+        target.addClass('btn-danger')
+        target.removeClass('btn-success')
 
       }else{
         this.isShowEdit = true;
-        $('#edit-button').text('編集メニューを非表示')
-        $('#edit-button').addClass('btn-success')
-        $('#edit-button').removeClass('btn-danger')
+        let target = $('#edit-button');
+        target.text('編集メニューを非表示')
+        target.addClass('btn-success')
+        target.removeClass('btn-danger')
       }
     },
 

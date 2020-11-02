@@ -155,7 +155,7 @@ export default {
 
       this.$router.push({
         name: 'home',
-        params: {homeMenus: this.editMenus}
+        params: {homeMenus: this.editMenus, uiStatus: true}
       })
     },
     toHomeWithoutSave() {
