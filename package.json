@@ -10,10 +10,13 @@
   "dependencies": {
     "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
+    "natsort": "^2.0.2",
     "vue": "^2.6.11",
     "vue-analytics": "^5.22.1",
+    "vue-cool-select": "^3.5.2",
     "vue-gtag": "^1.9.1",
-    "vue-head": "^2.2.0"
+    "vue-head": "^2.2.0",
+    "vue-simple-suggest": "^1.10.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

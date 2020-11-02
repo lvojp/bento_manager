@@ -71,10 +71,18 @@ export default {
       }
     },
     // 降順ソート
-    ascSortList(arr){
+    descSortList(arr){
       arr.sort(function (a, b) {
         if (a > b) return -1;
         if (a < b) return 1;
+      });
+      return arr;
+    },
+    // 昇順ソート
+    ascSortList(arr){
+      arr.sort(function (a, b) {
+        if (a < b) return -1;
+        if (a > b) return 1;
       });
       return arr;
     },

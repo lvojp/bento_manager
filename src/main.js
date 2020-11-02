@@ -1,7 +1,13 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import VueAnalytics from "vue-analytics";
+import VueAnalytics from "vue-analytics"
+
+// vue-cool-select関連（サジェスト機能）
+import { CoolSelectPlugin } from 'vue-cool-select'
+import 'vue-cool-select/dist/themes/bootstrap.css'
+Vue.use(CoolSelectPlugin);
+
 
 // Analytics
 Vue.use(VueAnalytics, {
@@ -15,6 +21,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
+
+
 
 new Vue({
     router,

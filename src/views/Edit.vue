@@ -17,10 +17,10 @@
       </div>
     </div>
 
-    <IngredientRegister :propItem="currentItem" @registerItem="appendIngredient"></IngredientRegister>
+    <IngredientRegister :propItem="currentItem" :all-menus="myMenus" @registerItem="appendIngredient" style="position:relative; z-index: 2"></IngredientRegister>
 
     <div class="row mb-5">
-      <table class="table table-striped col-md-12">
+      <table class="table table-striped col-md-12" style="position:relative; z-index: 1">
         <th>No.</th>
         <th>素材名</th>
         <th>量</th>
@@ -161,7 +161,7 @@ export default {
     toHomeWithoutSave() {
       this.$router.push({
         name: 'home',
-        params: {homeMenus: this.myMenus}
+        params: {homeMenus: this.editMenus, uiStatus: true}
       })
     }
 
