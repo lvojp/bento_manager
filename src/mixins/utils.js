@@ -79,6 +79,17 @@ export default {
       return arr;
     },
 
+    menuSort(arr){
+      arr.sort(function(a, b) {
+        if (a.name > b.name) {
+          return 1;
+        } else {
+          return -1;
+        }
+      })
+      return arr;
+    },
+
     // 整数チェック
     isInteger(x){
       try {

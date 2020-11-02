@@ -211,7 +211,8 @@ export default {
         }
       }
       let buf = this.removeSameIngredient(result);
-      this.result = this.removeZeroAmountIngredients(buf);
+      let buf2 = this.removeZeroAmountIngredients(buf);
+      this.result = this.menuSort(this.objectCopy(buf2));
     },
 
     loadMenus() {
@@ -268,7 +269,9 @@ export default {
       for (let i = 0; i < list.length; i++) {
         result.splice(list[i], 1);
       }
+
       return result;
+      // return this.menuSort(result);
     },
 
     removeSameIngredient(arr) {
