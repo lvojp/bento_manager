@@ -269,7 +269,7 @@ export default {
         }
       }
       // 降順ソート （配列の後ろの方から消していかないと順番が崩れるから
-      list = this.ascSortList(list)
+      list = this.descSortList(list)
 
       // リストをもとに配列を削除
       for (let i = 0; i < list.length; i++) {

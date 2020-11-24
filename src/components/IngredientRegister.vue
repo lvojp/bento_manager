@@ -17,7 +17,10 @@
               :min-length="0"
               :filter-by-query="true"
               :aria-expanded="true"
+              :mode="input"
+              :isOverList="true"
               autocomplete="off"
+              style="z-index:2;"
           />
         </div>
 
@@ -35,19 +38,9 @@
               :min-length="0"
               :filter-by-query="true"
               autocomplete="off"
+              style="z-index: 1"
           />
 
-<!--          <input-->
-<!--              type="number"-->
-<!--              id="input-amount"-->
-<!--              v-model="item.amount"-->
-<!--              @change="checkNumInput(item.amount)"-->
-<!--              class="form-control"-->
-<!--              pattern="\d*"-->
-<!--              oncopy="return false"-->
-<!--              onpaste="return false"-->
-<!--              style="ime-mode:disabled"-->
-<!--          >-->
         </div>
 
         <div class="form-group">
@@ -101,7 +94,7 @@ export default {
         vueSimpleSuggest: "position-relative",
         inputWrapper: "",
         defaultInput : "form-control",
-        suggestions: "position-absolute list-group z-1000 bgw",
+        suggestions: "position-absolute list-group z-1000",
         suggestItem: "list-group-item"
       }
     }
@@ -155,6 +148,7 @@ export default {
 
     register() {
       if (this.inputClear()) {
+        this.trimSpaceInput();
         this.$emit('registerItem', this.item);
       }else{
         alert('材料名、量、単位の項目は入力必須です');
@@ -178,6 +172,11 @@ export default {
       }
       return true;
     },
+    trimSpaceInput() {
+      this.item.name = this.item.name.trim();
+      this.item.amount = this.item.amount.trim();
+      this.item.unit =  this.item.unit.trim();
+    },
     checkNumInput(s){
       if (!this.checkNum(s)) {
         this.item.amount = 1;
@@ -190,14 +189,10 @@ export default {
 
 <style scoped>
 .z-1000 {
-  z-index: 10000000000;
+  z-index: 1000;
 }
 .hover {
   background-color: #007bff;
   color: #fff;
-}
-.bgw{
-  background-color:white;
-  position:relative;
 }
 </style>
