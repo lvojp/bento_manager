@@ -54,8 +54,8 @@
 
         <button type="button" class="btn btn-success ml-1" @click="register">追加</button>
       </form>
-<!--      <p>{{suggestSource}}</p>-->
-<!--      <p>{{allIngredients}}</p>-->
+      <!--      <p>{{suggestSource}}</p>-->
+      <!--      <p>{{allIngredients}}</p>-->
 
     </div>
   </div>
@@ -76,8 +76,7 @@ export default {
   },
 
   name: "IngredientRegister",
-
-  props: ['propItem','allMenus'],
+  props: ['propItem', 'allMenus', 'ingredients'],
 
   data() {
     return {
@@ -90,10 +89,10 @@ export default {
         amount: '',
         unit: '個'
       },
-      autoCompleteStyle : {
+      autoCompleteStyle: {
         vueSimpleSuggest: "position-relative",
         inputWrapper: "",
-        defaultInput : "form-control",
+        defaultInput: "form-control",
         suggestions: "position-absolute list-group z-1000",
         suggestItem: "list-group-item"
       }
@@ -113,7 +112,7 @@ export default {
       this.item = o;
     },
 
-    getAllIngredientList(src){
+    getAllIngredientList(src) {
       let result = [];
       let buf = [];
       for (let i = 0; i < src.length; i++) {
@@ -129,7 +128,7 @@ export default {
       return result;
     },
 
-    getAllAmountList(src){
+    getAllAmountList(src) {
       let result = [];
       let buf = [];
       for (let i = 0; i < src.length; i++) {
@@ -149,8 +148,12 @@ export default {
     register() {
       if (this.inputClear()) {
         this.trimSpaceInput();
-        this.$emit('registerItem', this.item);
-      }else{
+        if (this.checkDuplication(this.item.name)) {
+          this.$emit('registerItem', this.item);
+        } else {
+          alert('この材料はすでに登録されています。')
+        }
+      } else {
         alert('材料名、量、単位の項目は入力必須です');
       }
       // this.clearItem();
@@ -160,6 +163,7 @@ export default {
       this.item.amount = '';
       this.item.unit = '';
     },
+
     inputClear() {
       if (this.item.name === '') {
         return false;
@@ -172,12 +176,25 @@ export default {
       }
       return true;
     },
+
     trimSpaceInput() {
       this.item.name = this.item.name.trim();
       this.item.amount = this.item.amount.trim();
-      this.item.unit =  this.item.unit.trim();
+      this.item.unit = this.item.unit.trim();
     },
-    checkNumInput(s){
+
+    checkDuplication(name) {
+      // let plain = this.ingredients[0].name;
+      // alert(plain);
+      for (let i = 0; i < this.ingredients.length; i++) {
+        if (name === this.ingredients[i].name) {
+          return false;
+        }
+      }
+      return true;
+    },
+
+    checkNumInput(s) {
       if (!this.checkNum(s)) {
         this.item.amount = 1;
       }
@@ -191,6 +208,7 @@ export default {
 .z-1000 {
   z-index: 1000;
 }
+
 .hover {
   background-color: #007bff;
   color: #fff;

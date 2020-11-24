@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <IngredientRegister :propItem="currentItem" :all-menus="myMenus" @registerItem="appendIngredient" style="position:relative; z-index: 2"></IngredientRegister>
+    <IngredientRegister :propItem="currentItem" :all-menus="myMenus" :ingredients="myMenu.ingredients" @registerItem="appendIngredient" style="position:relative; z-index: 2"></IngredientRegister>
 
     <div class="row mb-5">
       <table class="table table-striped col-md-12" style="position:relative; z-index: 1">
