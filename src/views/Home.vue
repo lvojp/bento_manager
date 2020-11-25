@@ -25,14 +25,13 @@ export default {
             <th v-if="isShowEdit">Edit</th>
           </tr>
         </thead>
+<!--        delay=150 以下の場合、input:textにカーソルが上手く行かない-->
         <draggable
             v-model="myMenus"
             tag="tbody"
             draggable="tr"
-            v-bind:options="{
-              animation: 300,
-              delay: 150, //150以下の場合、input:textにカーソルが上手く行かない
-            }"
+            animation="300"
+            delay="150"
             @end="drag=dragEnd()"
         >
           <tr v-for="(item, index) in myMenus" :key="item.title" class="grabbable" >
@@ -146,10 +145,11 @@ export default {
   beforeMount() {
     this.setUiStatus();
     this.loadMenus();
-    for (let i = 0; i < this.myMenus.length; i++) {
-      this.needAmount.push({});
-    }
-    this.displayResult();
+    this.redrawMenus();
+    // for (let i = 0; i < this.myMenus.length; i++) {
+    //   this.needAmount.push({});
+    // }
+    // this.displayResult();
   },
 
   methods: {
@@ -344,9 +344,15 @@ export default {
         target.removeClass('btn-danger')
       }
     },
-
+    redrawMenus(){
+      for (let i = 0; i < this.myMenus.length; i++) {
+        this.needAmount.push({});
+      }
+      this.displayResult();
+    },
     dragEnd(){
-      this.saveToLocalStorage(this.myMenus, 'home')
+      this.redrawMenus();
+      this.saveToLocalStorage(this.myMenus, 'home');
     }
   },
 

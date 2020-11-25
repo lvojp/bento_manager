@@ -17,7 +17,6 @@
               :min-length="0"
               :filter-by-query="true"
               :aria-expanded="true"
-              :mode="input"
               :isOverList="true"
               autocomplete="off"
               style="z-index:2;"

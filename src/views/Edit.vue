@@ -21,26 +21,35 @@
 
     <div class="row mb-5">
       <table class="table table-striped col-md-12" style="position:relative; z-index: 1">
-        <th>No.</th>
-        <th>素材名</th>
-        <th>量</th>
-        <th>単位</th>
-        <th>Edit</th>
-
-        <tbody>
-        <tr v-for="(item, index) in myMenu.ingredients" v-bind:key="item.name">
-          <td>{{ index + 1 }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.amount }}</td>
-          <td>{{ item.unit }}</td>
-          <td>
-            <button type="button" class="btn btn-success mr-1" @click="editItem(index)"><img src="@/assets/pen.png"
-                                                                                             alt="edit"/></button>
-            <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png"
-                                                                                          alt="remove"/></button>
-          </td>
-        </tr>
-        </tbody>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>素材名</th>
+            <th>量</th>
+            <th>単位</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <draggable
+            v-model="myMenu.ingredients"
+            tag="tbody"
+            draggable="tr"
+            animation="300"
+            delay="150"
+        >
+          <tr v-for="(item, index) in myMenu.ingredients" v-bind:key="item.name" class="grabbable">
+            <td>{{ index + 1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.amount }}</td>
+            <td>{{ item.unit }}</td>
+            <td>
+              <button type="button" class="btn btn-success mr-1" @click="editItem(index)"><img src="@/assets/pen.png"
+                                                                                               alt="edit"/></button>
+              <button type="button" class="btn btn-success" @click="deleteItem(index)"><img src="@/assets/trashbox.png"
+                                                                                            alt="remove"/></button>
+            </td>
+          </tr>
+        </draggable>
       </table>
     </div>
 
@@ -66,6 +75,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import IngredientRegister from "@/components/IngredientRegister";
 import utilsMixin from '@/mixins/utils.js'
+import draggable from 'vuedraggable'
 
 export default {
   mixins: [utilsMixin],
@@ -73,7 +83,8 @@ export default {
   components: {
     Header,
     Footer,
-    IngredientRegister
+    IngredientRegister,
+    draggable
   },
   props: {
     editMenus: Array,
@@ -148,7 +159,7 @@ export default {
       if (this.isUpdate) {
         // this.updateMenus(this.editMenus, this.myMenu);
         this.updateOrgMenu(this.editMenus, this.myMenu);
-        console.log(this.editMenus);
+        // console.log(this.editMenus);
       } else {
         this.appendMenus(this.myMenu);
       }
@@ -171,5 +182,12 @@ export default {
 </script>
 
 <style scoped>
+
+.grabbable:hover{
+  cursor: grab;
+}
+.grabbable:active{
+  cursor: grabbing;
+}
 
 </style>
